@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: TypeGeneratorSettings
   m_EditorClassIdentifier: 
   Tag:
-    AutoGenerate: 1
+    AutoGenerate: 0
     TypeName: Tag
     FilePath: Scripts/Core/Runtime/Generated/Tag.cs
     Namespace: 
-    AssemblyDefinition: {fileID: 5897886265953266890, guid: 82ee2cd020e8f48489221cbfda9c8ef1, type: 3}
+    AssemblyDefinition: {fileID: 0}
   Layer:
-    AutoGenerate: 1
+    AutoGenerate: 0
     TypeName: Layer
     FilePath: Scripts/Core/Runtime/Generated/Layer.cs
     Namespace: 
-    AssemblyDefinition: {fileID: 5897886265953266890, guid: 82ee2cd020e8f48489221cbfda9c8ef1, type: 3}
+    AssemblyDefinition: {fileID: 0}
