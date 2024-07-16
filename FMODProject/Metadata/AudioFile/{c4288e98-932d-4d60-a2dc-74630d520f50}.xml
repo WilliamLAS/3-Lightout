@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{c4288e98-932d-4d60-a2dc-74630d520f50}">
+		<property name="assetPath">
+			<value>386999__lollosound__lr-1-eff-surreale.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>4.8799999999999999</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{61441c8d-8a3f-42b3-8752-e8bb971b1cc7}</destination>
+		</relationship>
+	</object>
+</objects>

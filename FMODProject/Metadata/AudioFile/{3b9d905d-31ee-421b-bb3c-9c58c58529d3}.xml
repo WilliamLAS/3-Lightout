@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{3b9d905d-31ee-421b-bb3c-9c58c58529d3}">
+		<property name="assetPath">
+			<value>61633__erh__guitar-acstg-v2201b2-62-2.wav</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>14.021360544217687</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{61441c8d-8a3f-42b3-8752-e8bb971b1cc7}</destination>
+		</relationship>
+	</object>
+</objects>

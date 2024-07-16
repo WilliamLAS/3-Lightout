@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{28141165-ff81-409f-8afd-a773f4345e3c}">
+		<property name="assetPath">
+			<value>99482__robinhood76__01866-death-wave.wav</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>29.754353741496598</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{61441c8d-8a3f-42b3-8752-e8bb971b1cc7}</destination>
+		</relationship>
+	</object>
+</objects>

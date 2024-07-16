@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{843b8b89-8a20-43fc-86e2-2aff3729463a}">
+		<property name="assetPath">
+			<value>39433__erh__22-o1-31-guitar-2.wav</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>17.265328798185941</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{61441c8d-8a3f-42b3-8752-e8bb971b1cc7}</destination>
+		</relationship>
+	</object>
+</objects>
