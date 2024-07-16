@@ -17,10 +17,10 @@ MonoBehaviour:
     TypeName: Tag
     FilePath: Scripts/Core/Runtime/Generated/Tag.cs
     Namespace: 
-    AssemblyDefinition: {fileID: 0}
+    AssemblyDefinition: {fileID: 5897886265953266890, guid: 18bab259267710344bc1484294f88acb, type: 3}
   Layer:
     AutoGenerate: 0
     TypeName: Layer
     FilePath: Scripts/Core/Runtime/Generated/Layer.cs
     Namespace: 
-    AssemblyDefinition: {fileID: 0}
+    AssemblyDefinition: {fileID: 5897886265953266890, guid: 18bab259267710344bc1484294f88acb, type: 3}
