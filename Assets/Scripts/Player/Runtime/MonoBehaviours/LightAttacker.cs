@@ -56,12 +56,6 @@ public sealed partial class LightAttacker : StateMachineDrivenPlayerBase
 
 
 	// Initialize
-	protected override void OnEnable()
-	{
-		RandomizeOrbit();
-		base.OnEnable();
-	}
-
 	public void RandomizeOrbit()
 	{
 		// Randomize orbiting speed
