@@ -5,8 +5,12 @@ using static UnityEngine.InputSystem.InputAction;
 [RequireComponent(typeof(Rigidbody))]
 public sealed partial class Movable : MonoBehaviour
 {
-	[SerializeField]
-	private Rigidbody selfRigidbody;
+	[field: SerializeField]
+	public Rigidbody SelfRigidbody
+	{
+		get;
+		private set;
+	}
 
 	[SerializeField]
 	private UpdateType updateType;
@@ -22,9 +26,6 @@ public sealed partial class Movable : MonoBehaviour
 
 	[NonSerialized]
 	public Vector3 movingDirection;
-
-
-	// Initialize
 
 
 	// Update
@@ -57,12 +58,12 @@ public sealed partial class Movable : MonoBehaviour
 
 	public void ApplySpeedForceToDirection()
 	{
-		selfRigidbody.AddForce(Vector3.Scale(movementForce, movingDirection.normalized), movementForceMode);
+		SelfRigidbody.AddForce(Vector3.Scale(movementForce, movingDirection.normalized), movementForceMode);
 	}
 
 	private void LimitVelocity()
 	{
-		var updatedLinearVelocity = selfRigidbody.linearVelocity;
+		var updatedLinearVelocity = SelfRigidbody.linearVelocity;
 
 		if (maxMovementVelocity.x > 0f)
 			updatedLinearVelocity.x = Mathf.Clamp(updatedLinearVelocity.x, -maxMovementVelocity.x, maxMovementVelocity.x);
@@ -73,7 +74,7 @@ public sealed partial class Movable : MonoBehaviour
 		if (maxMovementVelocity.z > 0f)
 			updatedLinearVelocity.z = Mathf.Clamp(updatedLinearVelocity.z, -maxMovementVelocity.z, maxMovementVelocity.z);
 
-		selfRigidbody.linearVelocity = updatedLinearVelocity;
+		SelfRigidbody.linearVelocity = updatedLinearVelocity;
 	}
 
 	public void SetMovingDirection(CallbackContext context)
@@ -81,9 +82,6 @@ public sealed partial class Movable : MonoBehaviour
 		var inputValue = context.ReadValue<Vector2>();
 		movingDirection = new Vector3(inputValue.x, 0f, inputValue.y);
 	}
-
-
-	// Dispose
 }
 
 
