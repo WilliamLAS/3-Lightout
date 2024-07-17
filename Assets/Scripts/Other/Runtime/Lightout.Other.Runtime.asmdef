@@ -1,0 +1,20 @@
+{
+    "name": "Lightout.Other.Runtime",
+    "rootNamespace": "",
+    "references": [
+        "GUID:18bab259267710344bc1484294f88acb",
+        "GUID:31976cc9e85bdd9459e856fcb40d0d50"
+    ],
+    "includePlatforms": [
+        "Editor",
+        "WebGL"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -5,32 +5,103 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public sealed partial class LightAttacker : StateMachineDrivenPlayerBase
 {
-    [SerializeField]
-    private Movable movementController;
-
-    [SerializeField]
-    private List<TargetType> acceptedTargetList;
-
-    [SerializeField]
-    private float stopFollowDistance;
+	[Header("LightAttacker Movement")]
+	#region LightAttacker Movement
 
 	[SerializeField]
-    private float followingOrbitDistance;
+	private Movable movementController;
 
-    [SerializeField]
-    [Range(0f, 180f)]
-    private float followingOrbitingAngleChangeSpeed;
+	[NonSerialized]
+	private Transform followTransform;
 
-    [NonSerialized]
-    private Transform followTransform;
 
-    private bool IsAbleToFollow => (movementController && followTransform);
+	#endregion
+
+	[Header("LightAttacker Target")]
+	#region LightAttacker Target
+
+	[SerializeField]
+    private List<TargetType> acceptedTargetList;
+
+
+	#endregion
+
+
+	[Header("LightAttacker Following")]
+	#region LightAttacker Following
+
+	[SerializeField]
+	private float followingOrbitDistance;
+
+	[SerializeField]
+	private float stopFollowDistance;
+
+
+	#endregion
+
+	#region LightAttacker Following Orbiting
+
+	[NonSerialized]
+	private float orbitAngleChangeSpeed;
+
+	[NonSerialized]
+	private Vector3 orbitAxis;
+
+	[NonSerialized]
+	private float currentOrbitAngle;
+
+
+	#endregion
+
+	private bool IsAbleToFollow => (movementController && followTransform);
 
 
 	// Initialize
 	protected override void OnEnable()
 	{
-        base.OnEnable();
+		RandomizeOrbit();
+		base.OnEnable();
+	}
+
+	public void RandomizeOrbit()
+	{
+		// Randomize orbiting speed
+		// Minimum 45 degree of speed is allowed
+		orbitAngleChangeSpeed = UnityEngine.Random.Range(-180f, 180f);
+
+		if (Math.Abs(orbitAngleChangeSpeed) < 45f)
+			orbitAngleChangeSpeed += 45f * Mathf.Sign(orbitAngleChangeSpeed);
+
+		// Randomize orbiting axis
+		var orbitOrientationArray = Enum.GetValues(typeof(OrientationAxisType));
+		var randomSelectedOrbitOrientation = UnityEngine.Random.Range(0, orbitOrientationArray.Length);
+
+		switch (randomSelectedOrbitOrientation)
+		{
+			case (int)OrientationAxisType.XY:
+			orbitAxis = VectorUtils.RandomRange(new Vector3(0f, 0f , 0f), new Vector3(1f, 1f, 0f));
+			break;
+
+			case (int)OrientationAxisType.XZ:
+			orbitAxis = VectorUtils.RandomRange(new Vector3(0f, 0f , 0f), new Vector3(1f, 0f, 1f));
+			break;
+
+			case (int)OrientationAxisType.YZ:
+			orbitAxis = VectorUtils.RandomRange(new Vector3(0f, 0f , 0f), new Vector3(0f, 1f, 1f));
+			break;
+
+			case (int)OrientationAxisType.YX:
+				goto case (int)OrientationAxisType.XY;
+
+			case (int)OrientationAxisType.ZX:
+				goto case (int)OrientationAxisType.XZ;
+
+			case (int)OrientationAxisType.ZY:
+				goto case (int)OrientationAxisType.YZ;
+
+			default:
+				goto case (int)OrientationAxisType.XY;
+		}
 	}
 
 
@@ -54,17 +125,47 @@ public sealed partial class LightAttacker : StateMachineDrivenPlayerBase
             return;
         }
 
-		var newFollowPosition = followTransform.position;
-        var norDirFollowingToSelf = followTransform.position.GetDifferenceTo(this.transform.position).normalized;
+        currentOrbitAngle += (Time.deltaTime * orbitAngleChangeSpeed);
+        currentOrbitAngle %= 360f;
 
-        newFollowPosition += (norDirFollowingToSelf * followingOrbitDistance);
-        newFollowPosition = newFollowPosition.RotateByDegreeAngle(followingOrbitingAngleChangeSpeed, followTransform.position);
+        var orbitAxisAngle = Quaternion.AngleAxis(currentOrbitAngle, orbitAxis) * (Vector3.one - orbitAxis);
+		var newFollowPosition = followTransform.position - (orbitAxisAngle.normalized * followingOrbitDistance);
 
         if (this.transform.position.IsNearTo(newFollowPosition, stopFollowDistance))
             movementController.movingDirection = default;
         else
 		    movementController.movingDirection = this.transform.position.GetDifferenceTo(newFollowPosition);
 	}
+
+	/*protected override void DoFollowingState()
+	{
+		if (!IsAbleToFollow)
+		{
+			State = PlayerStateType.Idle;
+			return;
+		}
+
+		var newFollowPosition = followTransform.position;
+		var norDirFollowingToSelf = followTransform.position.GetDifferenceTo(this.transform.position).normalized;
+
+		newFollowPosition += (norDirFollowingToSelf * followingOrbitDistance);
+		newFollowPosition = newFollowPosition.RotateByDegreeAngle(followingOrbitingAngleChangeSpeed, followTransform.position);
+
+		Debug.DrawLine(followTransform.position, newFollowPosition);
+
+		if (this.transform.position.IsNearTo(newFollowPosition, stopFollowDistance))
+			movementController.movingDirection = default;
+		else
+			movementController.movingDirection = this.transform.position.GetDifferenceTo(newFollowPosition);
+	}*/
+
+	protected override void OnStateChangedToFollowing()
+	{
+		RandomizeOrbit();
+		base.OnStateChangedToFollowing();
+	}
+
+	
 
 	public void OnGrabTriggerEnter(Collider other)
     {

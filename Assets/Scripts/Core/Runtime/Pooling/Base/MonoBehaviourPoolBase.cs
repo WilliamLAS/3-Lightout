@@ -17,16 +17,20 @@ public abstract partial class MonoBehaviourPoolBase<PooledObjectType> : MonoBeha
 	// Initialize
 	protected virtual void Awake()
 	{
-		MainPool = new ObjectPool<PooledObjectType>(OnCreatePooledObject, OnGetPooledObject, OnReleasePooledObject, OnDestroyPooledObject, collectionCheck, 10, MaxPoolSize);
+		MainPool = new ObjectPool<PooledObjectType>(OnCreatePooledObject, OnGetPooledObjectInternal, OnReleasePooledObjectInternal, OnDestroyPooledObject, collectionCheck, 10, MaxPoolSize);
 	}
 
 	protected abstract PooledObjectType OnCreatePooledObject();
 
-	protected virtual void OnGetPooledObject(PooledObjectType pooledObject)
+	protected virtual void OnGetPooledObjectInternal(PooledObjectType pooledObject)
 	{
 		if (pooledObject is IPooledObject<PooledObjectType> foundObject)
 			foundObject.OnTakenFromPool(this);
+
+		OnGetPooledObject(pooledObject);
 	}
+
+	protected abstract void OnGetPooledObject(PooledObjectType pooledObject);
 
 
 	// Update
@@ -82,11 +86,15 @@ public abstract partial class MonoBehaviourPoolBase<PooledObjectType> : MonoBeha
 
 	protected abstract void OnDestroyPooledObject(PooledObjectType pooledObject);
 
-	protected virtual void OnReleasePooledObject(PooledObjectType pooledObject)
+	protected virtual void OnReleasePooledObjectInternal(PooledObjectType pooledObject)
 	{
 		if (pooledObject is IPooledObject<PooledObjectType> foundObject)
 			foundObject.OnReleaseToPool(this);
+
+		OnReleasePooledObject(pooledObject);
 	}
+
+	protected abstract void OnReleasePooledObject(PooledObjectType pooledObject);
 }
 
 
