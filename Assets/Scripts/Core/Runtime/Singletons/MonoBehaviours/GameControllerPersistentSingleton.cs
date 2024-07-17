@@ -81,7 +81,7 @@ public sealed partial class GameControllerPersistentSingleton : MonoBehaviourSin
 	private static void OnActiveSceneChanged(Scene lastScene, Scene loadedScene)
 	{
 		if (!IsAnyInstanceLiving)
-			TryCreateSingleton();
+			CreateSingleton();
 	}
 
 	private void OnVisibilityChange(string value) => VisibilityState = Enum.Parse<JSVisibilityStateType>(value, true);

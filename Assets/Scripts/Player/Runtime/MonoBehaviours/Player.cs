@@ -9,10 +9,18 @@ public sealed partial class Player : MonoBehaviour
     private uint maxCollectableLightAttackerCount;
 
 
-    // Initialize
+	// Update
+	public void OnKilledOtherEnemy(Enemy killed)
+	{
+		SceneControllerPersistentSingleton.Instance.RestartScene();
+	}
 
+	public void OnGotKilledByEnemy(Enemy killedBy)
+    {
+        //GameControllerPersistentSingleton.Instance.LostGame();
+        SceneControllerPersistentSingleton.Instance.RestartScene();
+    }
 
-    // Update
     public void OnGrabbedLightAttacker(LightAttacker lightAttacker)
     {
         collectedLightAttackerCount++;
@@ -38,9 +46,6 @@ public sealed partial class Player : MonoBehaviour
 				GameControllerPersistentSingleton.Instance.LostGame();*/
 		}
 	}
-
-
-    // Dispose
 }
 
 

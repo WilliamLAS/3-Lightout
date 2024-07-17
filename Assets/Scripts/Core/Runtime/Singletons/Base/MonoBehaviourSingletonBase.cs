@@ -39,20 +39,30 @@ public abstract partial class MonoBehaviourSingletonBase<SingletonType> : MonoBe
     }
 
 
-    // Update
-    public static void TryCreateSingleton()
+	// Update
+	/// <summary> Creates by checking the state of game </summary>
+	public static void TryCreateSingleton()
     {
-        if (GameControllerPersistentSingleton.IsQuitting || SceneControllerPersistentSingleton.IsActiveSceneChanging)
-            throw new Exception(string.Format("Cant create Singleton {0}. You are probably trying to instantiate or access in OnDestroy() or OnDisable(). This occurs when changing scenes nor quitting the game", typeof(SingletonType).Name));
+        if (IsAnyInstanceLiving || GameControllerPersistentSingleton.IsQuitting || SceneControllerPersistentSingleton.IsActiveSceneChanging)
+        {
+            Debug.LogError(string.Format("Cant create Singleton {0}. You are probably trying to instantiate or access in OnDestroy() or OnDisable(). This occurs when changing scenes nor quitting the game or when there is an living instance exists", typeof(SingletonType).Name));
+            return;
+        }
 
-		_instance = new GameObject(typeof(SingletonType).Name, typeof(SingletonType)).GetComponent<SingletonType>();
+        CreateSingleton();
+	}
+
+	/// <summary> Creates without checking the state of game </summary>
+    public static void CreateSingleton()
+    {
+        _instance = new GameObject(typeof(SingletonType).Name, typeof(SingletonType)).GetComponent<SingletonType>();
 		_instance.name = _instance.GameObjectName;
 
 #if UNITY_EDITOR
 		if (!Application.isPlaying)
 			_instance.hideFlags = HideFlags.DontSave | HideFlags.NotEditable;
 #endif
-	}
+    }
 
     public static void FindOrTryCreateSingleton()
     {

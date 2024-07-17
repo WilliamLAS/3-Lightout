@@ -98,7 +98,7 @@ namespace AYellowpaper.Editor
 
         private void InitVisualElements()
         {
-            var styleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/SerializeInterfaces/Assets/USS/ObjectSelectorWindow.uss");
+            var styleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>(AssetDatabase.GUIDToAssetPath("5750d2656cea8ea488662fef0bdedbe5"));
             rootVisualElement.styleSheets.Add(styleSheet);
 
             _searchbox = new ToolbarSearchField();

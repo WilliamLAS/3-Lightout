@@ -1,10 +1,7 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Pool;
 
 [RequireComponent(typeof(Rigidbody))]
-public sealed partial class Dark : StateMachineDrivenPlayerBase
+public sealed partial class Dark : StateMachineDrivenPlayerBase, IPooledObject<Dark>, IMonoBehaviourPooledObject<Dark>
 {
 	[Header("Dark Movement")]
 	#region Dark Movement
@@ -15,42 +12,32 @@ public sealed partial class Dark : StateMachineDrivenPlayerBase
 
 	#endregion
 
-	[Header("Dark Target")]
-	#region Dark Target
+	[Header("Dark Enemy")]
+	#region Dark Enemy
 
 	[SerializeField]
-    private List<TargetType> acceptedTargetTypeList;
-
-	[NonSerialized]
-	private readonly HashSet<Target> targetInRangeSet = new();
+	private Enemy enemyController;
 
 
 	#endregion
 
-	private bool IsAbleToFollow => (movementController && (targetInRangeSet.Count > 0));
+	#region Dark Following
+
+	private bool IsAbleToFollow => (movementController && enemyController && enemyController.IsAcceptedTargetFoundInRange());
 
 
-	// Initialize
+	#endregion
+
+	#region Dark Other
+
+	public IPool<Dark> ParentPool
+	{ get; set; }
+
+
+	#endregion
 
 
 	// Update
-	private bool TryGetNearestTargetTransform(out Transform nearestTransform)
-	{
-		nearestTransform = default;
-		var cachedTransformList = ListPool<Transform>.Get();
-
-		foreach (var iteratedTarget in targetInRangeSet)
-		{
-			if (acceptedTargetTypeList.Contains(iteratedTarget.TargetType))
-				cachedTransformList.Add(iteratedTarget.transform);
-		}
-
-		var isFoundNearestTransform = this.transform.TryGetNearestTransform(cachedTransformList.GetEnumerator(), out nearestTransform);
-		ListPool<Transform>.Release(cachedTransformList);
-
-		return isFoundNearestTransform;
-	}
-
 	protected override void DoIdleState()
 	{
         if (!IsAbleToFollow)
@@ -70,38 +57,52 @@ public sealed partial class Dark : StateMachineDrivenPlayerBase
             return;
         }
 
-		if (TryGetNearestTargetTransform(out Transform nearestTransform))
+		if (enemyController.TryGetNearestEnemyTransform(out Transform nearestTransform))
 			movementController.movingDirection = this.transform.position.GetDifferenceTo(nearestTransform.position);
 		else
 			movementController.movingDirection = default;
 	}
 
-	public void OnTargetTriggerEnter(Collider other)
+	protected override void OnStateChangedToIdle()
 	{
-		if (!other)
-			return;
-
-		if (EventReflectorUtils.TryGetComponentByEventReflector<Target>(other.gameObject, out Target found))
-			targetInRangeSet.Add(found);
+		if (movementController)
+			movementController.movingDirection = default;
 	}
 
-	public void OnTargetTriggerExit(Collider other)
+	protected override void OnStateChangedToDead()
 	{
-		if (!other)
-		{
-			targetInRangeSet.RemoveWhere((iteratedTarget) => !iteratedTarget);
-			return;
-		}
-
-		if (EventReflectorUtils.TryGetComponentByEventReflector<Target>(other.gameObject, out Target found))
-			targetInRangeSet.Remove(found);
+		ReleaseOrDestroySelf();
 	}
+
+	public void OnKilledOtherEnemy(Enemy killed)
+	{
+		State = PlayerStateType.Dead;
+	}
+
+	public void OnGotKilledByEnemy(Enemy killedBy)
+	{
+		State = PlayerStateType.Dead;
+	}
+
+	public void OnTakenFromPool(IPool<Dark> pool)
+	{ }
+
+	public void OnReleaseToPool(IPool<Dark> pool)
+	{ }
 
 
 	// Dispose
 	private void OnDisable()
 	{
 		movementController.movingDirection = default;
+	}
+
+	public void ReleaseOrDestroySelf()
+	{
+		if (ParentPool != null)
+			ParentPool.Release(this);
+		else
+			Destroy(this.gameObject);
 	}
 }
 

@@ -8,3 +8,11 @@ public interface IPooledObject<PooledObjectType>
 
 	public void OnReleaseToPool(IPool<PooledObjectType> pool);
 }
+
+public interface IMonoBehaviourPooledObject<PooledObjectType>
+	where PooledObjectType : class
+{
+	public IPool<PooledObjectType> ParentPool { get; set; }
+
+	public void ReleaseOrDestroySelf();
+}

@@ -3,8 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public sealed partial class LightAttacker : StateMachineDrivenPlayerBase
+public sealed partial class LightAttacker : StateMachineDrivenPlayerBase, IPooledObject<LightAttacker>, IMonoBehaviourPooledObject<LightAttacker>, IFrameDependentPhysicsInteractor<LightAttacker.PhysicsInteraction>
 {
+	public enum PhysicsInteraction
+	{
+		OnGrabTriggerEnter,
+	}
+
 	[Header("LightAttacker Movement")]
 	#region LightAttacker Movement
 
@@ -13,6 +18,15 @@ public sealed partial class LightAttacker : StateMachineDrivenPlayerBase
 
 	[NonSerialized]
 	private Player followingPlayer;
+
+
+	#endregion
+
+	[Header("LightAttacker Enemy")]
+	#region Dark Enemy
+
+	[SerializeField]
+	private Enemy enemyController;
 
 
 	#endregion
@@ -35,6 +49,8 @@ public sealed partial class LightAttacker : StateMachineDrivenPlayerBase
 	[SerializeField]
 	private float stopFollowDistance;
 
+	private bool IsAbleToFollow => (movementController && enemyController && (followingPlayer || enemyController.IsAcceptedTargetFoundInRange()));
+
 
 	#endregion
 
@@ -52,10 +68,31 @@ public sealed partial class LightAttacker : StateMachineDrivenPlayerBase
 
 	#endregion
 
-	private bool IsAbleToFollow => (movementController && followingPlayer);
+	#region LightAttacker Other
+
+	public IPool<LightAttacker> ParentPool
+	{ get; set; }
+
+	private Queue<FrameDependentInteraction<PhysicsInteraction>> FrameDependentInteractionQueue
+	{ get; } = new();
 
 
-	// Initialize
+	#endregion
+
+
+	// Update
+	protected override void Update()
+	{
+		DoFrameDependentPhysics();
+		base.Update();
+	}
+
+	public void RegisterFrameDependentPhysicsInteraction(FrameDependentInteraction<PhysicsInteraction> interaction)
+	{
+		if (!FrameDependentInteractionQueue.Contains(interaction))
+			FrameDependentInteractionQueue.Enqueue(interaction);
+	}
+
 	public void RandomizeOrbit()
 	{
 		// Randomize orbiting speed
@@ -72,33 +109,64 @@ public sealed partial class LightAttacker : StateMachineDrivenPlayerBase
 		switch (randomSelectedOrbitOrientation)
 		{
 			case (int)OrientationAxisType.XY:
-			orbitAxis = VectorUtils.RandomRange(new Vector3(0f, 0f , 0f), new Vector3(1f, 1f, 0f));
+			orbitAxis = VectorUtils.RandomRange(new Vector3(0f, 0f, 0f), new Vector3(1f, 1f, 0f));
 			break;
 
 			case (int)OrientationAxisType.XZ:
-			orbitAxis = VectorUtils.RandomRange(new Vector3(0f, 0f , 0f), new Vector3(1f, 0f, 1f));
+			orbitAxis = VectorUtils.RandomRange(new Vector3(0f, 0f, 0f), new Vector3(1f, 0f, 1f));
 			break;
 
 			case (int)OrientationAxisType.YZ:
-			orbitAxis = VectorUtils.RandomRange(new Vector3(0f, 0f , 0f), new Vector3(0f, 1f, 1f));
+			orbitAxis = VectorUtils.RandomRange(new Vector3(0f, 0f, 0f), new Vector3(0f, 1f, 1f));
 			break;
 
 			case (int)OrientationAxisType.YX:
-				goto case (int)OrientationAxisType.XY;
+			goto case (int)OrientationAxisType.XY;
 
 			case (int)OrientationAxisType.ZX:
-				goto case (int)OrientationAxisType.XZ;
+			goto case (int)OrientationAxisType.XZ;
 
 			case (int)OrientationAxisType.ZY:
-				goto case (int)OrientationAxisType.YZ;
+			goto case (int)OrientationAxisType.YZ;
 
 			default:
-				goto case (int)OrientationAxisType.XY;
+			goto case (int)OrientationAxisType.XY;
 		}
 	}
 
+	public void DoFrameDependentPhysics()
+	{
+		for (int i = FrameDependentInteractionQueue.Count - 1; i >= 0; i--)
+		{
+			var iteratedPhysicsInteraction = FrameDependentInteractionQueue.Dequeue();
 
-	// Update
+			switch (iteratedPhysicsInteraction.interactionType)
+			{
+				case PhysicsInteraction.OnGrabTriggerEnter:
+				DoGrabTriggerEnter(iteratedPhysicsInteraction);
+				break;
+			}
+		}
+	}
+
+	private void DoGrabTriggerEnter(FrameDependentInteraction<PhysicsInteraction> interaction)
+	{
+		if (!interaction.collider)
+			return;
+
+		if (EventReflectorUtils.TryGetComponentByEventReflector<Player>(interaction.collider.gameObject, out Player found))
+		{
+			if (followingPlayer != found)
+			{
+				if (followingPlayer)
+					followingPlayer.OnUnGrabbedLightAttacker(this);
+
+				followingPlayer = found;
+				followingPlayer.OnGrabbedLightAttacker(this);
+			}
+		}
+	}
+
 	protected override void DoIdleState()
 	{
         if (!IsAbleToFollow)
@@ -118,16 +186,44 @@ public sealed partial class LightAttacker : StateMachineDrivenPlayerBase
             return;
         }
 
-        currentOrbitAngle += (Time.deltaTime * orbitAngleChangeSpeed);
-        currentOrbitAngle %= 360f;
+		Vector3 newFollowPosition = default;
 
-        var orbitAxisAngle = Quaternion.AngleAxis(currentOrbitAngle, orbitAxis) * (Vector3.one - orbitAxis);
-		var newFollowPosition = followingPlayer.transform.position - (orbitAxisAngle.normalized * followingOrbitDistance);
+		// Ready following values for nearest target
+		if (enemyController && enemyController.TryGetNearestEnemyTransform(out Transform nearestEnemyTransform))
+			State = PlayerStateType.Attacking;
 
-        if (this.transform.position.IsNearTo(newFollowPosition, stopFollowDistance))
-            movementController.movingDirection = default;
-        else
-		    movementController.movingDirection = this.transform.position.GetDifferenceTo(newFollowPosition);
+		// Ready following values for Player
+		else if (followingPlayer)
+		{
+			currentOrbitAngle += (Time.deltaTime * orbitAngleChangeSpeed);
+			currentOrbitAngle %= 360f;
+
+			var orbitAxisAngle = Quaternion.AngleAxis(currentOrbitAngle, orbitAxis) * (Vector3.one - orbitAxis);
+			newFollowPosition = followingPlayer.transform.position - (orbitAxisAngle.normalized * followingOrbitDistance);
+		}
+
+		// Follow
+		if (this.transform.position.IsNearTo(newFollowPosition, stopFollowDistance))
+			movementController.movingDirection = default;
+		else
+			movementController.movingDirection = this.transform.position.GetDifferenceTo(newFollowPosition);
+	}
+
+	protected override void DoAttackingState()
+	{
+		Transform nearestEnemyTransform = default;
+
+		if (enemyController && !enemyController.TryGetNearestEnemyTransform(out nearestEnemyTransform))
+		{
+			State = PlayerStateType.Idle;
+			return;
+		}
+
+		// Follow
+		if (this.transform.position.IsNearTo(nearestEnemyTransform.position, stopFollowDistance))
+			movementController.movingDirection = default;
+		else
+			movementController.movingDirection = this.transform.position.GetDifferenceTo(nearestEnemyTransform.position);
 	}
 
 	/*protected override void DoFollowingState()
@@ -152,29 +248,41 @@ public sealed partial class LightAttacker : StateMachineDrivenPlayerBase
 			movementController.movingDirection = this.transform.position.GetDifferenceTo(newFollowPosition);
 	}*/
 
+	protected override void OnStateChangedToIdle()
+	{
+		if (movementController)
+			movementController.movingDirection = default;
+	}
+
 	protected override void OnStateChangedToFollowing()
 	{
 		RandomizeOrbit();
 		base.OnStateChangedToFollowing();
 	}
 
+	protected override void OnStateChangedToDead()
+	{
+		ReleaseOrDestroySelf();
+	}
+
+	public void OnKilledOtherEnemy(Enemy killed)
+	{
+		State = PlayerStateType.Dead;
+	}
+
+	public void OnGotKilledByEnemy(Enemy killedBy)
+	{
+		State = PlayerStateType.Dead;
+	}
+
 	public void OnGrabTriggerEnter(Collider other)
-    {
-        if (!other)
-            return;
+		=> RegisterFrameDependentPhysicsInteraction(new(PhysicsInteraction.OnGrabTriggerEnter, other, null));
 
-        if (EventReflectorUtils.TryGetComponentByEventReflector<Player>(other.gameObject, out Player found))
-		{
-			if (followingPlayer != found)
-			{
-				if (followingPlayer)
-					followingPlayer.OnUnGrabbedLightAttacker(this);
+	public void OnTakenFromPool(IPool<LightAttacker> pool)
+	{ }
 
-				followingPlayer = found;
-				followingPlayer.OnGrabbedLightAttacker(this);
-			}
-		}
-    }
+	public void OnReleaseToPool(IPool<LightAttacker> pool)
+	{ }
 
 
 	// Dispose
@@ -187,6 +295,19 @@ public sealed partial class LightAttacker : StateMachineDrivenPlayerBase
 		}
 
 		movementController.movingDirection = default;
+	}
+
+	public void ReleaseOrDestroySelf()
+	{
+		if (ParentPool != null)
+			ParentPool.Release(this);
+		else
+			Destroy(this.gameObject);
+	}
+
+	public void CallExitInteractions()
+	{
+		throw new NotImplementedException();
 	}
 }
 

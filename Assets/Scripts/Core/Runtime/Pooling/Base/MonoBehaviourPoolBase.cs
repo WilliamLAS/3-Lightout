@@ -25,7 +25,10 @@ public abstract partial class MonoBehaviourPoolBase<PooledObjectType> : MonoBeha
 	protected virtual void OnGetPooledObjectInternal(PooledObjectType pooledObject)
 	{
 		if (pooledObject is IPooledObject<PooledObjectType> foundObject)
+		{
+			foundObject.ParentPool = this;
 			foundObject.OnTakenFromPool(this);
+		}
 
 		OnGetPooledObject(pooledObject);
 	}

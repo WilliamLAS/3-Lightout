@@ -4,7 +4,7 @@ using UnityEngine;
 
 public static class TransformExtensions
 {
-	public static bool TryGetNearestTransform<TransformEnumeratorType>(this Transform relativeTo, TransformEnumeratorType transformEnumerable, out Transform nearestTransform, Predicate<Transform> predicateNearest = null)
+	public static bool TryGetNearestTransform<TransformEnumeratorType>(this Transform relativeTo, TransformEnumeratorType transformEnumerator, out Transform nearestTransform, Predicate<Transform> predicateNearest = null)
 		where TransformEnumeratorType : IEnumerator<Transform>
 	{
 		nearestTransform = default;
@@ -14,7 +14,7 @@ public static class TransformExtensions
 		float iteratedDistance;
 
 		// Check sqr distances and select nearest
-		foreach (var iteratedTransform in transformEnumerable)
+		foreach (var iteratedTransform in transformEnumerator)
 		{
 			iteratedDistance = (iteratedTransform.position - relativeTo.position).sqrMagnitude;
 
