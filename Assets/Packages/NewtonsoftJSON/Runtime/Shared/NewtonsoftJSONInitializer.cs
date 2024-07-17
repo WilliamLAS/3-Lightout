@@ -5,7 +5,7 @@ using UnityEditor;
 public static partial class NewtonsoftJSONInitializer
 {
 	// Initialize
-	[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+	[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
 	private static void OnBeforeSceneLoad()
 	{
 		ConfigureSettings();

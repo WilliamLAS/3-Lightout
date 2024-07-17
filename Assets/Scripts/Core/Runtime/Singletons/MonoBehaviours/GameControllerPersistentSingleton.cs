@@ -8,9 +8,14 @@ public sealed partial class GameControllerPersistentSingleton : MonoBehaviourSin
 	[Header("GameControllerPersistentSingleton Events")]
 	#region GameControllerPersistentSingleton Events
 
-	public UnityEvent onRestartGame = new();
+	[SerializeField]
+	private UnityEvent onRestartGame = new();
 
-	public UnityEvent onLostGame = new();
+	[SerializeField]
+	private UnityEvent onLostGame = new();
+
+	[SerializeField]
+	private UnityEvent onFinishedLevel = new();
 
 
 	#endregion
@@ -56,10 +61,14 @@ public sealed partial class GameControllerPersistentSingleton : MonoBehaviourSin
 	public void RestartGame()
 	{
 		onRestartGame?.Invoke();
-		SaveDataControllerSingleton.Instance.DeleteSaveDataFile();
-		SaveDataControllerSingleton.Instance.FreshSaveData();
 		ResumeGame();
 		SceneControllerPersistentSingleton.Instance.RestartScene();
+	}
+
+	public void FinishedLevel()
+	{
+		SaveDataControllerSingleton.Instance.SaveDataToFile();
+		onFinishedLevel?.Invoke();
 	}
 
 	public void LostGame()
@@ -67,6 +76,7 @@ public sealed partial class GameControllerPersistentSingleton : MonoBehaviourSin
 		PauseGame();
 		onLostGame?.Invoke();
 	}
+
 
 	private static void OnActiveSceneChanged(Scene lastScene, Scene loadedScene)
 	{

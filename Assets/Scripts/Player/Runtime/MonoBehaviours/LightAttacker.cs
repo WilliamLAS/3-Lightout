@@ -12,7 +12,7 @@ public sealed partial class LightAttacker : StateMachineDrivenPlayerBase
 	private Movable movementController;
 
 	[NonSerialized]
-	private Transform followTransform;
+	private Player followingPlayer;
 
 
 	#endregion
@@ -25,7 +25,6 @@ public sealed partial class LightAttacker : StateMachineDrivenPlayerBase
 
 
 	#endregion
-
 
 	[Header("LightAttacker Following")]
 	#region LightAttacker Following
@@ -53,7 +52,7 @@ public sealed partial class LightAttacker : StateMachineDrivenPlayerBase
 
 	#endregion
 
-	private bool IsAbleToFollow => (movementController && followTransform);
+	private bool IsAbleToFollow => (movementController && followingPlayer);
 
 
 	// Initialize
@@ -129,7 +128,7 @@ public sealed partial class LightAttacker : StateMachineDrivenPlayerBase
         currentOrbitAngle %= 360f;
 
         var orbitAxisAngle = Quaternion.AngleAxis(currentOrbitAngle, orbitAxis) * (Vector3.one - orbitAxis);
-		var newFollowPosition = followTransform.position - (orbitAxisAngle.normalized * followingOrbitDistance);
+		var newFollowPosition = followingPlayer.transform.position - (orbitAxisAngle.normalized * followingOrbitDistance);
 
         if (this.transform.position.IsNearTo(newFollowPosition, stopFollowDistance))
             movementController.movingDirection = default;
@@ -165,19 +164,36 @@ public sealed partial class LightAttacker : StateMachineDrivenPlayerBase
 		base.OnStateChangedToFollowing();
 	}
 
-	
-
 	public void OnGrabTriggerEnter(Collider other)
     {
         if (!other)
             return;
 
-        if (EventReflectorUtils.TryGetComponentByEventReflector<Target>(other.gameObject, out Target found))
-        {
-            if (found.CompareTag(Tag.Player))
-                followTransform = found.transform;
-        }
+        if (EventReflectorUtils.TryGetComponentByEventReflector<Player>(other.gameObject, out Player found))
+		{
+			if (followingPlayer != found)
+			{
+				if (followingPlayer)
+					followingPlayer.OnUnGrabbedLightAttacker(this);
+
+				followingPlayer = found;
+				followingPlayer.OnGrabbedLightAttacker(this);
+			}
+		}
     }
+
+
+	// Dispose
+	private void OnDisable()
+	{
+		if (followingPlayer)
+		{
+			followingPlayer.OnUnGrabbedLightAttacker(this);
+			followingPlayer = null;
+		}
+
+		movementController.movingDirection = default;
+	}
 }
 
 
