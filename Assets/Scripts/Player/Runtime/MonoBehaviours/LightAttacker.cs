@@ -288,6 +288,9 @@ public sealed partial class LightAttacker : StateMachineDrivenPlayerBase, IPoole
 	// Dispose
 	private void OnDisable()
 	{
+		if (GameControllerPersistentSingleton.IsQuitting || SceneControllerPersistentSingleton.IsActiveSceneChanging)
+			return;
+
 		if (followingPlayer)
 		{
 			followingPlayer.OnUnGrabbedLightAttacker(this);

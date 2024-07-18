@@ -1,15 +1,41 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public sealed partial class Player : MonoBehaviour
 {
-    [SerializeField]
-    private uint collectedLightAttackerCount;
+    [Header("Player Light Attacker")]
+    #region Player Light Attacker
 
     [SerializeField]
-    private uint maxCollectableLightAttackerCount;
+    private uint _collectedLightAttackerCount;
+
+    [SerializeField]
+    private uint _maxCollectableLightAttackerCount;
+
+    public uint CollectedLightAttackerCount => _collectedLightAttackerCount;
+
+	public uint MaxCollectableLightAttackerCount => _maxCollectableLightAttackerCount;
+
+
+	#endregion
+
+	[Header("Player Events")]
+	#region Player Events
+
+	[SerializeField]
+	private UnityEvent<float> onLevelProgressChanged = new();
+
+
+
+	#endregion
 
 
 	// Update
+	public void UpdateLevelProgress()
+    {
+        onLevelProgressChanged?.Invoke((float)_collectedLightAttackerCount / _maxCollectableLightAttackerCount);
+	}
+
 	public void OnKilledOtherEnemy(Enemy killed)
 	{
 		SceneControllerPersistentSingleton.Instance.RestartScene();
@@ -23,28 +49,34 @@ public sealed partial class Player : MonoBehaviour
 
     public void OnGrabbedLightAttacker(LightAttacker lightAttacker)
     {
-        collectedLightAttackerCount++;
+        _collectedLightAttackerCount++;
+        UpdateLevelProgress();
 
-        /*if (collectedLightAttackerCount >= maxCollectableLightAttackerCount)
-            GameControllerPersistentSingleton.Instance.FinishedLevel();*/
-	}
+		if (_collectedLightAttackerCount >= _maxCollectableLightAttackerCount)
+            GameControllerPersistentSingleton.Instance.FinishedLevel();
+    }
 
     public void OnUnGrabbedLightAttacker(LightAttacker lightAttacker)
     {
         try
         {
-            collectedLightAttackerCount = checked(collectedLightAttackerCount - 1);
+            _collectedLightAttackerCount = checked(_collectedLightAttackerCount - 1);
         }
 
         catch
         {
-            collectedLightAttackerCount = 0;
+            _collectedLightAttackerCount = 0;
         }
         finally
         {
-			/*if (collectedLightAttackerCount == 0)
-				GameControllerPersistentSingleton.Instance.LostGame();*/
-		}
+			UpdateLevelProgress();
+
+			if (_collectedLightAttackerCount == 0)
+            {
+                //GameControllerPersistentSingleton.Instance.LostGame();
+                Debug.Log("Lost Game");
+            }
+        }
 	}
 }
 

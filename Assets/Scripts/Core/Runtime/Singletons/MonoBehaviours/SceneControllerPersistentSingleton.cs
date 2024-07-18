@@ -14,7 +14,7 @@ public sealed partial class SceneControllerPersistentSingleton : MonoBehaviourSi
 
 
 	// Update
-	public void ChangeActiveScene(string sceneName)
+	public void ChangeActiveSceneTo(string sceneName)
 	{
 		IsActiveSceneChanging = true;
 		SceneManager.LoadScene(sceneName);
@@ -28,13 +28,28 @@ public sealed partial class SceneControllerPersistentSingleton : MonoBehaviourSi
 			return;
 		}
 
-		ChangeActiveScene(SceneManager.GetActiveScene().name);
+		ChangeActiveSceneTo(SceneManager.GetActiveScene().name);
 	}
 
 	private void RestartSceneWithoutUnusedAssets(AsyncOperation operation)
 	{
-		ChangeActiveScene(SceneManager.GetActiveScene().name);
+		ChangeActiveSceneTo(SceneManager.GetActiveScene().name);
 	}
+
+	public string GetNextLevelName()
+	{
+		switch (SceneManager.GetActiveScene().name)
+		{
+			case Scenes.Level1:
+				return Scenes.Level2;
+
+			default:
+				return Scenes.Level1;
+		}
+	}
+
+	public void ChangeActiveSceneToNextLevel()
+		=> ChangeActiveSceneTo(GetNextLevelName());
 
 	private static void OnActiveSceneChanged(Scene lastScene, Scene loadedScene)
 	{

@@ -67,7 +67,6 @@ public sealed partial class GameControllerPersistentSingleton : MonoBehaviourSin
 
 	public void FinishedLevel()
 	{
-		SaveDataControllerSingleton.Instance.SaveDataToFile();
 		onFinishedLevel?.Invoke();
 	}
 
@@ -76,7 +75,6 @@ public sealed partial class GameControllerPersistentSingleton : MonoBehaviourSin
 		PauseGame();
 		onLostGame?.Invoke();
 	}
-
 
 	private static void OnActiveSceneChanged(Scene lastScene, Scene loadedScene)
 	{

@@ -34,8 +34,8 @@ public sealed partial class ScreenControllerSingleton : MonoBehaviourSingletonBa
 
 
 	// Update
-	public void DoExplosion(float endTimeInSeconds = 1f)
-		=> ChangeVolumeWeight(explosionVolume, 1f, 0f, endTimeInSeconds);
+	public void DoExplosion(float endTimeInSeconds = 1f, Action onExplosionEnded = null)
+		=> ChangeVolumeWeight(explosionVolume, 1f, 0f, endTimeInSeconds, onExplosionEnded);
 
 	public void DoFade(float desiredFadeAmount, float fadeOutTimeInSeconds = 1f, float startFadeAmount = -1f, Action onFadeEnded = null)
 	{

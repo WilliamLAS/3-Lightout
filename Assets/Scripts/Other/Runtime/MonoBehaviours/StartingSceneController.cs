@@ -1,6 +1,5 @@
 using FMODUnity;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public sealed partial class StartingSceneController : MonoBehaviour
 {
@@ -165,11 +164,8 @@ public sealed partial class StartingSceneController : MonoBehaviour
 	{
 		playerCreationEmitter.Play();
 		ScreenControllerSingleton.Instance.DoFade(1f, 2f, onFadeEnded:
-				() => SceneControllerPersistentSingleton.Instance.ChangeActiveScene(Scenes.Level1));
+				() => SceneControllerPersistentSingleton.Instance.ChangeActiveSceneTo(Scenes.Level1));
 	}
-
-
-	// Dispose
 }
 
 
