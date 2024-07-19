@@ -1,3 +1,4 @@
+using FMODUnity;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -17,6 +18,18 @@ public sealed partial class Dark : StateMachineDrivenPlayerBase, IPooledObject<D
 
 	[SerializeField]
 	private Enemy enemyController;
+
+
+	#endregion
+
+	[Header("Dark Sounds")]
+	#region Dark Sounds
+
+	[SerializeField]
+	private StudioEventEmitter idleEmitter;
+
+	[SerializeField]
+	private StudioEventEmitter deathEmitter;
 
 
 	#endregion
@@ -65,13 +78,26 @@ public sealed partial class Dark : StateMachineDrivenPlayerBase, IPooledObject<D
 
 	protected override void OnStateChangedToIdle()
 	{
+		idleEmitter.Play();
+
 		if (movementController)
 			movementController.movingDirection = default;
 	}
 
+	protected override void OnStateChangedToFollowing()
+	{
+		idleEmitter.Play();
+	}
+
 	protected override void OnStateChangedToDead()
 	{
+		deathEmitter.Play();
 		ReleaseOrDestroySelf();
+	}
+
+	protected override void OnStateChangedToAny(PlayerStateType newState)
+	{
+		idleEmitter.Stop();
 	}
 
 	public void OnKilledOtherEnemy(Enemy killed)
@@ -92,11 +118,6 @@ public sealed partial class Dark : StateMachineDrivenPlayerBase, IPooledObject<D
 
 
 	// Dispose
-	private void OnDisable()
-	{
-		movementController.movingDirection = default;
-	}
-
 	public void ReleaseOrDestroySelf()
 	{
 		if (ParentPool != null)

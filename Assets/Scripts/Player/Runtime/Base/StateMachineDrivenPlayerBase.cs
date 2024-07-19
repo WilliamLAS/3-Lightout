@@ -13,6 +13,7 @@ public abstract partial class StateMachineDrivenPlayerBase : MonoBehaviour
             if (value != _state)
             {
                 _state = value;
+				OnStateChangedToAny(value);
                 OnStateChanged();
             }
         }
@@ -98,6 +99,10 @@ public abstract partial class StateMachineDrivenPlayerBase : MonoBehaviour
 	{ }
 
 	protected virtual void OnStateChangedToDead()
+	{ }
+
+	/// <summary> Called before other changed calls </summary>
+	protected virtual void OnStateChangedToAny(PlayerStateType newState)
 	{ }
 }
 

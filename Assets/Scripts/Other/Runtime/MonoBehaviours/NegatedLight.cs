@@ -14,6 +14,11 @@ public sealed partial class NegatedLight : MonoBehaviour
 
 
 	// Initialize
+	private void Awake()
+	{
+		UpdateColor();
+	}
+
 	private void OnEnable()
 	{
 		lastColor = controlled.color;
@@ -21,6 +26,11 @@ public sealed partial class NegatedLight : MonoBehaviour
 
 	// Update
 	private void Update()
+	{
+		UpdateColor();
+	}
+
+	private void UpdateColor()
 	{
 		if (controlled.color != negatedColor)
 		{

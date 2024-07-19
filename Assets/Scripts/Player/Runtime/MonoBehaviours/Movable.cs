@@ -28,6 +28,14 @@ public sealed partial class Movable : MonoBehaviour
 	public Vector3 movingDirection;
 
 
+	// Initialize
+	private void OnEnable()
+	{
+		movingDirection = default;
+		SelfRigidbody.linearVelocity = Vector3.zero;
+	}
+
+
 	// Update
 	private void Update()
 	{

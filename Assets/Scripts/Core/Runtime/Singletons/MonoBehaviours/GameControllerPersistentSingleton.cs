@@ -61,7 +61,6 @@ public sealed partial class GameControllerPersistentSingleton : MonoBehaviourSin
 	public void RestartGame()
 	{
 		onRestartGame?.Invoke();
-		ResumeGame();
 		SceneControllerPersistentSingleton.Instance.RestartScene();
 	}
 
@@ -72,7 +71,6 @@ public sealed partial class GameControllerPersistentSingleton : MonoBehaviourSin
 
 	public void LostGame()
 	{
-		PauseGame();
 		onLostGame?.Invoke();
 	}
 

@@ -1,3 +1,4 @@
+using FMODUnity;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -49,10 +50,23 @@ public sealed partial class LightAttacker : StateMachineDrivenPlayerBase, IPoole
 	[SerializeField]
 	private float stopFollowDistance;
 
-	private bool IsAbleToFollow => (movementController && enemyController && (followingPlayer || enemyController.IsAcceptedTargetFoundInRange()));
+	private bool IsAbleToFollow => (movementController && enemyController && followingPlayer);
 
 
 	#endregion
+
+	[Header("LightAttacker Sounds")]
+	#region LightAttacker Sounds
+
+	[SerializeField]
+	private StudioEventEmitter attackIdleEmitter;
+
+	[SerializeField]
+	private StudioEventEmitter deathEmitter;
+
+
+	#endregion
+
 
 	#region LightAttacker Following Orbiting
 
@@ -136,7 +150,7 @@ public sealed partial class LightAttacker : StateMachineDrivenPlayerBase, IPoole
 
 	public void DoFrameDependentPhysics()
 	{
-		for (int i = FrameDependentInteractionQueue.Count - 1; i >= 0; i--)
+		for (int i = FrameDependentInteractionQueue.Count; i > 0; i--)
 		{
 			var iteratedPhysicsInteraction = FrameDependentInteractionQueue.Dequeue();
 
@@ -186,21 +200,18 @@ public sealed partial class LightAttacker : StateMachineDrivenPlayerBase, IPoole
             return;
         }
 
-		Vector3 newFollowPosition = default;
-
-		// Ready following values for nearest target
-		if (enemyController && enemyController.TryGetNearestEnemyTransform(out Transform nearestEnemyTransform))
-			State = PlayerStateType.Attacking;
-
-		// Ready following values for Player
-		else if (followingPlayer)
+		// Try follow player or switch to attacking state
+		if (enemyController.TryGetNearestEnemyTransform(out Transform nearestEnemyTransform))
 		{
-			currentOrbitAngle += (Time.deltaTime * orbitAngleChangeSpeed);
-			currentOrbitAngle %= 360f;
-
-			var orbitAxisAngle = Quaternion.AngleAxis(currentOrbitAngle, orbitAxis) * (Vector3.one - orbitAxis);
-			newFollowPosition = followingPlayer.transform.position - (orbitAxisAngle.normalized * followingOrbitDistance);
+			State = PlayerStateType.Attacking;
+			return;
 		}
+
+		currentOrbitAngle += (Time.deltaTime * orbitAngleChangeSpeed);
+		currentOrbitAngle %= 360f;
+
+		var orbitAxisAngle = Quaternion.AngleAxis(currentOrbitAngle, orbitAxis) * (Vector3.one - orbitAxis);
+		var newFollowPosition = followingPlayer.transform.position - (orbitAxisAngle.normalized * followingOrbitDistance);
 
 		// Follow
 		if (this.transform.position.IsNearTo(newFollowPosition, stopFollowDistance))
@@ -260,9 +271,20 @@ public sealed partial class LightAttacker : StateMachineDrivenPlayerBase, IPoole
 		base.OnStateChangedToFollowing();
 	}
 
+	protected override void OnStateChangedToAttacking()
+	{
+		attackIdleEmitter.Play();
+	}
+
 	protected override void OnStateChangedToDead()
 	{
+		deathEmitter.Play();
 		ReleaseOrDestroySelf();
+	}
+
+	protected override void OnStateChangedToAny(PlayerStateType newState)
+	{
+		attackIdleEmitter.Stop();
 	}
 
 	public void OnKilledOtherEnemy(Enemy killed)
@@ -297,7 +319,7 @@ public sealed partial class LightAttacker : StateMachineDrivenPlayerBase, IPoole
 			followingPlayer = null;
 		}
 
-		movementController.movingDirection = default;
+		FrameDependentInteractionQueue.Clear();
 	}
 
 	public void ReleaseOrDestroySelf()

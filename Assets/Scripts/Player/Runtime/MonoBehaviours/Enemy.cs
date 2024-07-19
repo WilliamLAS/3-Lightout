@@ -52,14 +52,6 @@ public sealed partial class Enemy : MonoBehaviour, IFrameDependentPhysicsInterac
 
 	#endregion
 
-	#region Enemy Stats
-
-	public bool IsDead
-	{ get; private set; }
-
-
-	#endregion
-
 	[Header("Enemy Events")]
 	#region Enemy Events
 
@@ -68,6 +60,14 @@ public sealed partial class Enemy : MonoBehaviour, IFrameDependentPhysicsInterac
 
 	[SerializeField]
 	private UnityEvent<Enemy> onKilledOtherEnemy = new();
+
+
+	#endregion
+
+	#region Enemy Stats
+
+	public bool IsDead
+	{ get; private set; }
 
 
 	#endregion
@@ -131,7 +131,7 @@ public sealed partial class Enemy : MonoBehaviour, IFrameDependentPhysicsInterac
 
 	public void DoFrameDependentPhysics()
 	{
-		for (int i = FrameDependentInteractionQueue.Count - 1; i >= 0; i--)
+		for (int i = FrameDependentInteractionQueue.Count; i > 0; i--)
 		{
 			var iteratedPhysicsInteraction = FrameDependentInteractionQueue.Dequeue();
 
@@ -210,6 +210,7 @@ public sealed partial class Enemy : MonoBehaviour, IFrameDependentPhysicsInterac
 	private void OnDisable()
 	{
 		CallExitInteractions();
+		FrameDependentInteractionQueue.Clear();
 	}
 
 	public void CallExitInteractions()

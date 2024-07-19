@@ -17,6 +17,13 @@ public sealed partial class Level1SceneController : MonoBehaviour
 			onFadeEnded: () => SceneControllerPersistentSingleton.Instance.ChangeActiveSceneToNextLevel()));
 		;
 	}
+
+	public void OnLostLevel()
+	{
+		ScreenControllerSingleton.Instance.DoFade(1f, 2f,
+			onFadeEnded: () => SceneControllerPersistentSingleton.Instance.ChangeActiveSceneTo(Scenes.Level1));
+		;
+	}
 }
 
 

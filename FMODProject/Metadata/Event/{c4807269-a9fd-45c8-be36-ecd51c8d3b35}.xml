@@ -96,7 +96,7 @@
 			<value>8.7149433106575955</value>
 		</property>
 		<property name="volume">
-			<value>-25</value>
+			<value>-10</value>
 		</property>
 		<relationship name="fadeOutCurve">
 			<destination>{34bb60b8-ab2d-429c-98d6-0d1196d39e2a}</destination>

@@ -91,6 +91,7 @@ Material:
     m_Floats:
     - _AddPrecomputedVelocity: 0
     - _AdjustSpeed: 1
+    - _Alpha: 1
     - _AlphaClip: 1
     - _AlphaToMask: 1
     - _Alpha_Clipping_Threshold: 0.5
@@ -105,7 +106,7 @@ Material:
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
     - _ColorMode: 1
-    - _Cull: 0
+    - _Cull: 2
     - _Cutoff: 0.45
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1

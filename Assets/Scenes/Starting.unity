@@ -218,7 +218,7 @@ GameObject:
   - component: {fileID: 254813950}
   - component: {fileID: 254813949}
   m_Layer: 0
-  m_Name: 'ScreenControllerPersistentSingleton '
+  m_Name: ScreenControllerSingleton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

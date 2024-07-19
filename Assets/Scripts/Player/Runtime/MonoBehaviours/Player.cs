@@ -1,3 +1,4 @@
+using FMODUnity;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -10,11 +11,38 @@ public sealed partial class Player : MonoBehaviour
     private uint _collectedLightAttackerCount;
 
     [SerializeField]
-    private uint _maxCollectableLightAttackerCount;
+    private uint _finishLevelLightAttackerCount;
 
     public uint CollectedLightAttackerCount => _collectedLightAttackerCount;
 
-	public uint MaxCollectableLightAttackerCount => _maxCollectableLightAttackerCount;
+	public uint FinishLevelLightAttackerCount => _finishLevelLightAttackerCount;
+
+    public bool IsFinishedLevel
+    { get; private set; }
+
+
+	#endregion
+
+	[Header("Player Enemy")]
+	#region Player Enemy
+
+	[SerializeField]
+	private Enemy enemyController;
+
+
+	#endregion
+
+	[Header("Player Sounds")]
+    #region Player Sounds
+
+    [SerializeField]
+    private StudioEventEmitter idleEmitter;
+
+	[SerializeField]
+	private StudioEventEmitter deathEmitter;
+
+	[SerializeField]
+	private StudioEventEmitter lightAttackerCountChanged;
 
 
 	#endregion
@@ -30,35 +58,44 @@ public sealed partial class Player : MonoBehaviour
 	#endregion
 
 
+	// Initialize
+	private void OnEnable()
+	{
+        idleEmitter.Play();
+	}
+
+
 	// Update
 	public void UpdateLevelProgress()
     {
-        onLevelProgressChanged?.Invoke((float)_collectedLightAttackerCount / _maxCollectableLightAttackerCount);
+        onLevelProgressChanged?.Invoke((float)_collectedLightAttackerCount / _finishLevelLightAttackerCount);
 	}
 
 	public void OnKilledOtherEnemy(Enemy killed)
-	{
-		SceneControllerPersistentSingleton.Instance.RestartScene();
-	}
+	{ }
 
 	public void OnGotKilledByEnemy(Enemy killedBy)
     {
-        //GameControllerPersistentSingleton.Instance.LostGame();
-        SceneControllerPersistentSingleton.Instance.RestartScene();
+        deathEmitter.Play();
+		GameControllerPersistentSingleton.Instance.LostGame();
     }
 
     public void OnGrabbedLightAttacker(LightAttacker lightAttacker)
     {
-        _collectedLightAttackerCount++;
+        lightAttackerCountChanged.Play();
+		_collectedLightAttackerCount++;
         UpdateLevelProgress();
 
-		if (_collectedLightAttackerCount >= _maxCollectableLightAttackerCount)
+		if (!enemyController.IsDead && !IsFinishedLevel && (_collectedLightAttackerCount >= _finishLevelLightAttackerCount))
+        {
+            IsFinishedLevel = true;
             GameControllerPersistentSingleton.Instance.FinishedLevel();
+		}
     }
 
     public void OnUnGrabbedLightAttacker(LightAttacker lightAttacker)
     {
-        try
+		try
         {
             _collectedLightAttackerCount = checked(_collectedLightAttackerCount - 1);
         }
@@ -70,13 +107,14 @@ public sealed partial class Player : MonoBehaviour
         finally
         {
 			UpdateLevelProgress();
-
-			if (_collectedLightAttackerCount == 0)
-            {
-                //GameControllerPersistentSingleton.Instance.LostGame();
-                Debug.Log("Lost Game");
-            }
         }
+	}
+
+
+	// Dispose
+	private void OnDisable()
+	{
+		idleEmitter.Stop();
 	}
 }
 
