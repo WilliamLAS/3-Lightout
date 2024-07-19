@@ -61,9 +61,6 @@ public sealed partial class LightAttacker : StateMachineDrivenPlayerBase, IPoole
 	[SerializeField]
 	private StudioEventEmitter attackIdleEmitter;
 
-	[SerializeField]
-	private StudioEventEmitter deathEmitter;
-
 
 	#endregion
 
@@ -273,12 +270,12 @@ public sealed partial class LightAttacker : StateMachineDrivenPlayerBase, IPoole
 
 	protected override void OnStateChangedToAttacking()
 	{
-		attackIdleEmitter.Play();
+		if (!attackIdleEmitter.IsPlaying())
+			attackIdleEmitter.Play();
 	}
 
 	protected override void OnStateChangedToDead()
 	{
-		deathEmitter.Play();
 		ReleaseOrDestroySelf();
 	}
 

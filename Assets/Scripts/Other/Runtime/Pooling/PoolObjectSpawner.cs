@@ -11,6 +11,8 @@ public sealed partial class PoolObjectSpawner : MonoBehaviour
 	[SerializeField]
     private InterfaceReference<IPool> mainObjectPool;
 
+	public bool spawnByTimer;
+
 	[SerializeField]
 	private TimerRandomized spawnTimer;
 
@@ -70,7 +72,7 @@ public sealed partial class PoolObjectSpawner : MonoBehaviour
 	private void Update()
 	{
 		// Do spawn action once
-		if(spawnTimer.Tick())
+		if(spawnByTimer && spawnTimer.Tick())
 		{
 			SpawnAtRandomPoint();
 			spawnTimer.ResetAndRandomize();

@@ -5,24 +5,19 @@ public sealed partial class Level1SceneController : MonoBehaviour
 	// Initialize
 	private void OnEnable()
 	{
-		ScreenControllerSingleton.Instance.DoFade(0f, 2f, 1f);
+		ScreenControllerSingleton.Instance.DoExplosion(2f);
 	}
 
 
 	// Update
 	public void OnFinishedLevel()
 	{
-		ScreenControllerSingleton.Instance.DoExplosion(2f,
-			onExplosionEnded: () => ScreenControllerSingleton.Instance.DoFade(1f, 2f,
-			onFadeEnded: () => SceneControllerPersistentSingleton.Instance.ChangeActiveSceneToNextLevel()));
-		;
+		SceneControllerPersistentSingleton.Instance.ChangeActiveSceneToNextLevel();
 	}
 
 	public void OnLostLevel()
 	{
-		ScreenControllerSingleton.Instance.DoFade(1f, 2f,
-			onFadeEnded: () => SceneControllerPersistentSingleton.Instance.ChangeActiveSceneTo(Scenes.Level1));
-		;
+		SceneControllerPersistentSingleton.Instance.RestartScene();
 	}
 }
 

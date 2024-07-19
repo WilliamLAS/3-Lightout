@@ -162,6 +162,12 @@ public sealed partial class StartingSceneController : MonoBehaviour
 
 	private void OnStageChangedToPlayerCreation()
 	{
+		OnFinishedLevel();
+	}
+
+	public void OnFinishedLevel()
+	{
+		playerCreationEmitter.Stop();
 		playerCreationEmitter.Play();
 		ScreenControllerSingleton.Instance.DoFade(1f, 2f, onFadeEnded:
 				() => SceneControllerPersistentSingleton.Instance.ChangeActiveSceneTo(Scenes.Level1));

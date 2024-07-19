@@ -16,19 +16,15 @@ public sealed partial class Enemy : MonoBehaviour, IFrameDependentPhysicsInterac
 	[Header("Enemy Target")]
 	#region Enemy Target
 
-	[SerializeField]
-	public TargetType _targetType;
+	public TargetType targetType;
 
-	[SerializeField]
-	private List<TargetType> acceptedTargetTypeList = new();
+	public List<TargetType> acceptedTargetTypeList = new();
 
 	[NonSerialized]
 	private readonly HashSet<Enemy> _targetInRangeSet = new();
 
 	[NonSerialized]
 	private ReadOnlySet<Enemy> _targetInRangeReadonlySet;
-
-	public TargetType TargetType => _targetType;
 
 	private HashSet<Enemy> TargetInRangeSet
 	{
@@ -108,7 +104,7 @@ public sealed partial class Enemy : MonoBehaviour, IFrameDependentPhysicsInterac
 
 		foreach (var iteratedTarget in TargetInRangeSet)
 		{
-			if (acceptedTargetTypeList.Contains(iteratedTarget.TargetType))
+			if (acceptedTargetTypeList.Contains(iteratedTarget.targetType))
 				cachedTransformList.Add(iteratedTarget.transform);
 		}
 
@@ -122,7 +118,7 @@ public sealed partial class Enemy : MonoBehaviour, IFrameDependentPhysicsInterac
 	{
 		foreach (var iteratedTarget in TargetInRangeSet)
 		{
-			if (acceptedTargetTypeList.Contains(iteratedTarget.TargetType))
+			if (acceptedTargetTypeList.Contains(iteratedTarget.targetType))
 				return true;
 		}
 
@@ -177,7 +173,7 @@ public sealed partial class Enemy : MonoBehaviour, IFrameDependentPhysicsInterac
 
 		if (EventReflectorUtils.TryGetComponentByEventReflector<Enemy>(interaction.collider.gameObject, out Enemy found))
 		{
-			if (acceptedTargetTypeList.Contains(found.TargetType) && !found.IsDead)
+			if (acceptedTargetTypeList.Contains(found.targetType) && !found.IsDead)
 			{
 				onKilledOtherEnemy?.Invoke(found);
 				found.OnGotKilledByEnemy(this);

@@ -39,9 +39,6 @@ public sealed partial class Player : MonoBehaviour
     private StudioEventEmitter idleEmitter;
 
 	[SerializeField]
-	private StudioEventEmitter deathEmitter;
-
-	[SerializeField]
 	private StudioEventEmitter lightAttackerCountChanged;
 
 
@@ -76,7 +73,6 @@ public sealed partial class Player : MonoBehaviour
 
 	public void OnGotKilledByEnemy(Enemy killedBy)
     {
-        deathEmitter.Play();
 		GameControllerPersistentSingleton.Instance.LostGame();
     }
 

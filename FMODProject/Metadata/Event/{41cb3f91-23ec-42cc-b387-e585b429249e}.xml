@@ -553,6 +553,9 @@
 		<property name="timelockedOffset">
 			<value>0.18000000000000682</value>
 		</property>
+		<property name="volume">
+			<value>-10</value>
+		</property>
 		<relationship name="audioFile">
 			<destination>{843b8b89-8a20-43fc-86e2-2aff3729463a}</destination>
 		</relationship>
@@ -801,9 +804,6 @@
 		<property name="triggerProbabilityEnabled">
 			<value>true</value>
 		</property>
-		<property name="triggerProbability">
-			<value>50</value>
-		</property>
 		<relationship name="timeline">
 			<destination>{2cc35403-99a8-4664-a7a6-781aa40c75f7}</destination>
 		</relationship>
@@ -870,9 +870,6 @@
 		<property name="triggerProbabilityEnabled">
 			<value>true</value>
 		</property>
-		<property name="triggerProbability">
-			<value>50</value>
-		</property>
 		<relationship name="timeline">
 			<destination>{2cc35403-99a8-4664-a7a6-781aa40c75f7}</destination>
 		</relationship>
@@ -915,9 +912,6 @@
 		</property>
 		<property name="triggerProbabilityEnabled">
 			<value>true</value>
-		</property>
-		<property name="triggerProbability">
-			<value>50</value>
 		</property>
 		<relationship name="timeline">
 			<destination>{2cc35403-99a8-4664-a7a6-781aa40c75f7}</destination>

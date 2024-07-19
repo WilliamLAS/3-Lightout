@@ -225,7 +225,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collectionCheck: 1
-  <MaxPoolSize>k__BackingField: 100
+  <MaxPoolSize>k__BackingField: 50
   prefab: {fileID: 7318522431767844233, guid: b43343759fb8dbd42949d5b188bfaff6, type: 3}
 --- !u!4 &28555618
 Transform:
@@ -236,7 +236,7 @@ Transform:
   m_GameObject: {fileID: 28555616}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 59.52697, y: 0.48388106, z: 22.170485}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -274,6 +274,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainObjectPool:
     _underlyingValue: {fileID: 28555617}
+  spawnByTimer: 1
   spawnTimer:
     _tickType: 1
     _tickSecond: 6
@@ -5542,7 +5543,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collectionCheck: 1
-  <MaxPoolSize>k__BackingField: 100
+  <MaxPoolSize>k__BackingField: 5
   prefab: {fileID: -2804505223470957513, guid: 1ae91423a39fde44fa7cbdb5f3054833, type: 3}
 --- !u!4 &224079255
 Transform:
@@ -5553,7 +5554,7 @@ Transform:
   m_GameObject: {fileID: 224079253}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 59.52697, y: 0.48388106, z: 22.170485}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6517,7 +6518,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collectionCheck: 1
-  <MaxPoolSize>k__BackingField: 100
+  <MaxPoolSize>k__BackingField: 5
   prefab: {fileID: 8562257695084014327, guid: 6277b070a25d3da4b8747830e110ec0e, type: 3}
 --- !u!4 &529855690
 Transform:
@@ -6528,7 +6529,7 @@ Transform:
   m_GameObject: {fileID: 529855688}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 59.52697, y: 0.48388106, z: 22.170485}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6602,6 +6603,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainObjectPool:
     _underlyingValue: {fileID: 1986670292}
+  spawnByTimer: 1
   spawnTimer:
     _tickType: 1
     _tickSecond: 5
@@ -6788,6 +6790,69 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2744818827344090383, guid: dc926b9fbb772f34a8ec43deb035f5b0, type: 3}
   m_PrefabInstance: {fileID: 569727791}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &622487907
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 622487909}
+  - component: {fileID: 622487908}
+  m_Layer: 0
+  m_Name: EnteredLevelSFX
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &622487908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 622487907}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -1376295538
+      Data2: 1184028952
+      Data3: -1744988239
+      Data4: 2094096716
+    Path: event:/StartingScreen/StartingScreenExplosionSFX
+  Event: 
+  PlayEvent: 1
+  StopEvent: 2
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
+--- !u!4 &622487909
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 622487907}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &646840552
 GameObject:
   m_ObjectHideFlags: 0
@@ -7625,8 +7690,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 617c63164cfccf349a71aa22cc57d5e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explosionVolume: {fileID: 1684648446}
-  fadeVolume: {fileID: 755049496}
+  _explosionVolume: {fileID: 1684648446}
+  _fadeVolume: {fileID: 755049496}
 --- !u!4 &934708905
 Transform:
   m_ObjectHideFlags: 0
@@ -10402,7 +10467,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collectionCheck: 1
-  <MaxPoolSize>k__BackingField: 100
+  <MaxPoolSize>k__BackingField: 50
   prefab: {fileID: 785032251419117322, guid: 5bcd32f23d83b9e469b9f2d1ab32c916, type: 3}
 --- !u!4 &1986670293
 Transform:
@@ -10413,7 +10478,7 @@ Transform:
   m_GameObject: {fileID: 1986670291}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 59.52697, y: 0.48388106, z: 22.170485}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -11042,5 +11107,6 @@ SceneRoots:
   - {fileID: 1161595646}
   - {fileID: 1104719841}
   - {fileID: 1169883565}
+  - {fileID: 622487909}
   - {fileID: 1490458054}
   - {fileID: 2517608929448792733}

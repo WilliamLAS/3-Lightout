@@ -678,6 +678,9 @@
 		<property name="length">
 			<value>14.438049886621314</value>
 		</property>
+		<property name="volume">
+			<value>-10</value>
+		</property>
 		<relationship name="fadeOutCurve">
 			<destination>{63a63109-95b3-4d72-bcb5-cd127aaaf2ea}</destination>
 		</relationship>
@@ -801,9 +804,6 @@
 		<property name="triggerProbabilityEnabled">
 			<value>true</value>
 		</property>
-		<property name="triggerProbability">
-			<value>50</value>
-		</property>
 		<relationship name="timeline">
 			<destination>{e2c30945-0127-47c8-9da7-ad80eb6192d2}</destination>
 		</relationship>
@@ -870,9 +870,6 @@
 		<property name="triggerProbabilityEnabled">
 			<value>true</value>
 		</property>
-		<property name="triggerProbability">
-			<value>50</value>
-		</property>
 		<relationship name="timeline">
 			<destination>{e2c30945-0127-47c8-9da7-ad80eb6192d2}</destination>
 		</relationship>
@@ -915,9 +912,6 @@
 		</property>
 		<property name="triggerProbabilityEnabled">
 			<value>true</value>
-		</property>
-		<property name="triggerProbability">
-			<value>50</value>
 		</property>
 		<relationship name="timeline">
 			<destination>{e2c30945-0127-47c8-9da7-ad80eb6192d2}</destination>

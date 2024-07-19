@@ -801,9 +801,6 @@
 		<property name="triggerProbabilityEnabled">
 			<value>true</value>
 		</property>
-		<property name="triggerProbability">
-			<value>50</value>
-		</property>
 		<relationship name="timeline">
 			<destination>{bd24f518-ba7f-45fc-a69c-71a06a1a932a}</destination>
 		</relationship>
@@ -870,9 +867,6 @@
 		<property name="triggerProbabilityEnabled">
 			<value>true</value>
 		</property>
-		<property name="triggerProbability">
-			<value>50</value>
-		</property>
 		<relationship name="timeline">
 			<destination>{bd24f518-ba7f-45fc-a69c-71a06a1a932a}</destination>
 		</relationship>
@@ -915,9 +909,6 @@
 		</property>
 		<property name="triggerProbabilityEnabled">
 			<value>true</value>
-		</property>
-		<property name="triggerProbability">
-			<value>50</value>
 		</property>
 		<relationship name="timeline">
 			<destination>{bd24f518-ba7f-45fc-a69c-71a06a1a932a}</destination>

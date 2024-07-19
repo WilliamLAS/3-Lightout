@@ -8,5 +8,9 @@ public enum TargetType
 
 	Dark,
 
-	DarkLightAttacker
+	DarkLightAttacker,
+
+	KillerObstacleLight,
+
+	KillerObstacleDark
 }

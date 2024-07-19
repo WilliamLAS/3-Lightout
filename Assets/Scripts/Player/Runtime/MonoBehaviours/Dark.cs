@@ -28,9 +28,6 @@ public sealed partial class Dark : StateMachineDrivenPlayerBase, IPooledObject<D
 	[SerializeField]
 	private StudioEventEmitter idleEmitter;
 
-	[SerializeField]
-	private StudioEventEmitter deathEmitter;
-
 
 	#endregion
 
@@ -78,26 +75,17 @@ public sealed partial class Dark : StateMachineDrivenPlayerBase, IPooledObject<D
 
 	protected override void OnStateChangedToIdle()
 	{
-		idleEmitter.Play();
+		if (!idleEmitter.IsPlaying())
+			idleEmitter.Play();
 
 		if (movementController)
 			movementController.movingDirection = default;
 	}
 
-	protected override void OnStateChangedToFollowing()
-	{
-		idleEmitter.Play();
-	}
-
 	protected override void OnStateChangedToDead()
 	{
-		deathEmitter.Play();
-		ReleaseOrDestroySelf();
-	}
-
-	protected override void OnStateChangedToAny(PlayerStateType newState)
-	{
 		idleEmitter.Stop();
+		ReleaseOrDestroySelf();
 	}
 
 	public void OnKilledOtherEnemy(Enemy killed)

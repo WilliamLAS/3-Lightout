@@ -10,7 +10,9 @@ public sealed partial class ScreenControllerSingleton : MonoBehaviourSingletonBa
 	#region ScreenControllerSingleton Explosion
 
 	[SerializeField]
-	private Volume explosionVolume;
+	private Volume _explosionVolume;
+
+	public Volume ExplosionVolume => _explosionVolume;
 
 
 	#endregion
@@ -19,7 +21,9 @@ public sealed partial class ScreenControllerSingleton : MonoBehaviourSingletonBa
 	#region ScreenControllerSingleton Fade
 
 	[SerializeField]
-	private Volume fadeVolume;
+	private Volume _fadeVolume;
+
+	public Volume FadeVolume => _fadeVolume;
 
 
 	#endregion
@@ -35,14 +39,14 @@ public sealed partial class ScreenControllerSingleton : MonoBehaviourSingletonBa
 
 	// Update
 	public void DoExplosion(float endTimeInSeconds = 1f, Action onExplosionEnded = null)
-		=> ChangeVolumeWeight(explosionVolume, 1f, 0f, endTimeInSeconds, onExplosionEnded);
+		=> ChangeVolumeWeight(_explosionVolume, 1f, 0f, endTimeInSeconds, onExplosionEnded);
 
 	public void DoFade(float desiredFadeAmount, float fadeOutTimeInSeconds = 1f, float startFadeAmount = -1f, Action onFadeEnded = null)
 	{
 		if (startFadeAmount == -1f)
-			startFadeAmount = fadeVolume.weight;
+			startFadeAmount = _fadeVolume.weight;
 
-		ChangeVolumeWeight(fadeVolume, startFadeAmount, desiredFadeAmount, fadeOutTimeInSeconds, onFadeEnded);
+		ChangeVolumeWeight(_fadeVolume, startFadeAmount, desiredFadeAmount, fadeOutTimeInSeconds, onFadeEnded);
 	}
 
 	public Coroutine ChangeVolumeWeight(Volume volume, float startWeight, float targetWeight, float endTimeInSeconds = 1f, Action onEnded = null)

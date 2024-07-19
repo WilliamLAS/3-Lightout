@@ -115,9 +115,6 @@
 		<property name="name">
 			<value>Idle</value>
 		</property>
-		<relationship name="modulators">
-			<destination>{db402094-fa26-40e1-b129-e9c51cbbc963}</destination>
-		</relationship>
 		<relationship name="effectChain">
 			<destination>{9353a6c7-42d8-4689-9190-96171017d88f}</destination>
 		</relationship>
@@ -169,23 +166,6 @@
 			<destination>{d03b9d85-de8b-47ff-ad68-f56c448aac7b}</destination>
 		</relationship>
 	</object>
-	<object class="ADSRModulator" id="{db402094-fa26-40e1-b129-e9c51cbbc963}">
-		<property name="nameOfPropertyBeingModulated">
-			<value>volume</value>
-		</property>
-		<property name="initialValue">
-			<value>-80</value>
-		</property>
-		<property name="attackTime">
-			<value>0</value>
-		</property>
-		<property name="releaseTime">
-			<value>3000</value>
-		</property>
-		<property name="finalValue">
-			<value>-80</value>
-		</property>
-	</object>
 	<object class="MixerBusEffectChain" id="{9353a6c7-42d8-4689-9190-96171017d88f}">
 		<relationship name="effects">
 			<destination>{35b80ee0-aaeb-4150-b97e-d8e9566a3512}</destination>
@@ -193,7 +173,20 @@
 	</object>
 	<object class="MixerBusPanner" id="{08c183b3-cb88-4473-986f-f7ae9c45a2c2}" />
 	<object class="MixerBusFader" id="{c45ed50a-dabd-47d8-aec8-32af0c7485f1}" />
-	<object class="SpatialiserEffect" id="{f78da4a3-699f-4fd0-89d1-b9560c04f68d}" />
+	<object class="SpatialiserEffect" id="{f78da4a3-699f-4fd0-89d1-b9560c04f68d}">
+		<property name="minimumDistance">
+			<value>5.20000029</value>
+		</property>
+		<property name="maximumDistance">
+			<value>40</value>
+		</property>
+		<property name="soundSize">
+			<value>10000</value>
+		</property>
+		<property name="minimumExtent">
+			<value>90</value>
+		</property>
+	</object>
 	<object class="AutomationPoint" id="{8529b353-32bd-406b-83fa-d7a1047a587c}">
 		<property name="position">
 			<value>0</value>

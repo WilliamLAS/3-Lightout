@@ -1,16 +1,9 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(Rigidbody))]
 public sealed partial class TimedMovement : MonoBehaviour
 {
-	[Header("TimedMovement Destination")]
-	#region
-
-	public bool stopMovement;
-
-
-	#endregion
-
 	[Header("TimedMovement Destination")]
 	#region TimedMovement Destination
 
@@ -32,15 +25,44 @@ public sealed partial class TimedMovement : MonoBehaviour
 
 	#endregion
 
+	[Header("TimedMovement Events")]
+	#region TimedMovement Events
+
+	[SerializeField]
+	private UnityEvent onReachedToDestination;
+
+
+	#endregion
+
 	// Update
 	private void Update()
 	{
-		// TODO: Timer progress used here
-		if (!stopMovement && !destinationTimer.Tick())
+		UpdateDestinationProgress();
+	}
+
+	// TODO: Timer progress used here
+	public void MoveToCurrentProgress()
+	{
+		var timerProgress = (destinationTimer.TickSecond - destinationTimer.CurrentSecond) / destinationTimer.TickSecond;
+		controlledRigidbody.position = Vector3.Lerp(startingDestination.position, targetDestination.position, followCurve.Evaluate(timerProgress));
+	}
+
+	public void UpdateDestinationProgress()
+	{
+		if (!destinationTimer.HasEnded)
 		{
-			var timerProgress = (destinationTimer.TickSecond - destinationTimer.CurrentSecond) / destinationTimer.TickSecond;
-			controlledRigidbody.position = Vector3.Lerp(startingDestination.position, targetDestination.position, followCurve.Evaluate(timerProgress));
+			MoveToCurrentProgress();
+			destinationTimer.Tick();
+
+			if (destinationTimer.HasEnded)
+				onReachedToDestination?.Invoke();
 		}
+	}
+
+	public void ResetDestinationProgress()
+	{
+		destinationTimer.Reset();
+		MoveToCurrentProgress();
 	}
 }
 
