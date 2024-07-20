@@ -28,6 +28,9 @@ public sealed partial class Dark : StateMachineDrivenPlayerBase, IPooledObject<D
 	[SerializeField]
 	private StudioEventEmitter idleEmitter;
 
+	[SerializeField]
+	private EventReference deathEventReference;
+
 
 	#endregion
 
@@ -84,6 +87,7 @@ public sealed partial class Dark : StateMachineDrivenPlayerBase, IPooledObject<D
 
 	protected override void OnStateChangedToDead()
 	{
+		RuntimeManager.PlayOneShot(deathEventReference, this.transform.position);
 		idleEmitter.Stop();
 		ReleaseOrDestroySelf();
 	}

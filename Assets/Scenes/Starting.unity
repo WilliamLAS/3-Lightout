@@ -5347,7 +5347,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 001195f98f908e4478fda59e2070edf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stopMovement: 0
   controlledRigidbody: {fileID: 344725286}
   destinationTimer:
     _tickType: 1
@@ -5379,6 +5378,9 @@ MonoBehaviour:
     m_RotationOrder: 4
   startingDestination: {fileID: 662920239}
   targetDestination: {fileID: 1096165267}
+  onReachedToDestination:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!54 &344725286
 Rigidbody:
   m_ObjectHideFlags: 0

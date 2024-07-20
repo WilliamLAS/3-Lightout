@@ -91,6 +91,9 @@ public sealed partial class StartingSceneController : MonoBehaviour
 	// Update
 	private void Update()
 	{
+		if (!ambienceEmitter.IsPlaying())
+			ambienceEmitter.Play();
+
 		DoStage();
 	}
 

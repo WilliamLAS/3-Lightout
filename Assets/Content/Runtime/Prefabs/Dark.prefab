@@ -116,7 +116,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 15
+  m_Radius: 11
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &51597538773324931
 MonoBehaviour:
@@ -272,7 +272,7 @@ Light:
   serializedVersion: 11
   m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 30
+  m_Intensity: 50
   m_Range: 15
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -593,6 +593,13 @@ MonoBehaviour:
   movementController: {fileID: 4328175062291287024}
   enemyController: {fileID: 8649583368834892010}
   idleEmitter: {fileID: 8058134794558907969}
+  deathEventReference:
+    Guid:
+      Data1: 1407708370
+      Data2: 1269708214
+      Data3: 2074617011
+      Data4: 2007765560
+    Path: event:/Dark/DarkDeathSFX
 --- !u!114 &4328175062291287024
 MonoBehaviour:
   m_ObjectHideFlags: 0

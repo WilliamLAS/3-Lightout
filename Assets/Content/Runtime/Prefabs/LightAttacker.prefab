@@ -539,6 +539,13 @@ MonoBehaviour:
   followingOrbitDistance: 1
   stopFollowDistance: 0
   attackIdleEmitter: {fileID: 2969810230138727456}
+  deathEventReference:
+    Guid:
+      Data1: -626200462
+      Data2: 1196956405
+      Data3: 1505753245
+      Data4: 2011151370
+    Path: event:/LightAttacker/LightAttackerDeathSFX
 --- !u!114 &2158656876018481848
 MonoBehaviour:
   m_ObjectHideFlags: 0

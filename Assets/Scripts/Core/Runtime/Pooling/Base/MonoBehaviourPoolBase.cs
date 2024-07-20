@@ -5,7 +5,7 @@ public abstract partial class MonoBehaviourPoolBase<PooledObjectType> : MonoBeha
     where PooledObjectType : class
 {
     [SerializeField]
-	[Tooltip("Collection checks will throw errors if we try to release an item that is already in the pool")]
+	[Tooltip("Collection checks will throw errors if we try to release an item that is already in the pool. Disable if optimization is preferred and you are sure about your system stability")]
     private bool collectionCheck = true;
 
     [field: SerializeField]
@@ -17,12 +17,12 @@ public abstract partial class MonoBehaviourPoolBase<PooledObjectType> : MonoBeha
 	// Initialize
 	protected virtual void Awake()
 	{
-		MainPool = new ObjectPool<PooledObjectType>(OnCreatePooledObject, OnGetPooledObjectInternal, OnReleasePooledObjectInternal, OnDestroyPooledObject, collectionCheck, 10, MaxPoolSize);
+		MainPool = new ObjectPool<PooledObjectType>(OnCreatePooledObject, OnGetPooledObject_Internal, OnReleasePooledObject_Internal, OnDestroyPooledObject, collectionCheck, 10, MaxPoolSize);
 	}
 
 	protected abstract PooledObjectType OnCreatePooledObject();
 
-	protected virtual void OnGetPooledObjectInternal(PooledObjectType pooledObject)
+	private void OnGetPooledObject_Internal(PooledObjectType pooledObject)
 	{
 		if (pooledObject is IPooledObject<PooledObjectType> foundObject)
 		{
@@ -43,12 +43,12 @@ public abstract partial class MonoBehaviourPoolBase<PooledObjectType> : MonoBeha
 	public object GetUnknown()
 		=> Get();
 
-	public PooledObjectType Get(Vector2 worldPosition2D)
+	public PooledObjectType Get(Vector3 worldPosition)
 	{
 		var pooledObject = MainPool.Get();
 
 		if (pooledObject is MonoBehaviour pooledMonoBehaviour)
-			pooledMonoBehaviour.transform.position = worldPosition2D;
+			pooledMonoBehaviour.transform.position = worldPosition;
 		else
 			Debug.LogErrorFormat("{0} is not a type of MonoBehaviour. Returned normal pooled object", typeof(PooledObjectType));
 
@@ -58,13 +58,13 @@ public abstract partial class MonoBehaviourPoolBase<PooledObjectType> : MonoBeha
 	public PooledObject<PooledObjectType> Get(out PooledObjectType pooledObject)
 		=> MainPool.Get(out pooledObject);
 
-	public PooledObject<PooledObjectType> Get(Vector2 worldPosition2D, out PooledObjectType pooledObject)
+	public PooledObject<PooledObjectType> Get(Vector3 worldPosition, out PooledObjectType pooledObject)
 	{
 		var disposablePooledObject = MainPool.Get(out PooledObjectType takenPooledObject);
 		pooledObject = takenPooledObject;
 
 		if (takenPooledObject is MonoBehaviour pooledMonoBehaviour)
-			pooledMonoBehaviour.transform.position = worldPosition2D;
+			pooledMonoBehaviour.transform.position = worldPosition;
 		else
 			Debug.LogErrorFormat("{0} is not a type of MonoBehaviour. Returned normal pooled object", typeof(PooledObjectType));
 
@@ -89,7 +89,7 @@ public abstract partial class MonoBehaviourPoolBase<PooledObjectType> : MonoBeha
 
 	protected abstract void OnDestroyPooledObject(PooledObjectType pooledObject);
 
-	protected virtual void OnReleasePooledObjectInternal(PooledObjectType pooledObject)
+	protected virtual void OnReleasePooledObject_Internal(PooledObjectType pooledObject)
 	{
 		if (pooledObject is IPooledObject<PooledObjectType> foundObject)
 			foundObject.OnReleaseToPool(this);

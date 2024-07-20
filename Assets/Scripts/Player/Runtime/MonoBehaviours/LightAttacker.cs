@@ -1,7 +1,9 @@
+using FMOD.Studio;
 using FMODUnity;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 
 [RequireComponent(typeof(Rigidbody))]
 public sealed partial class LightAttacker : StateMachineDrivenPlayerBase, IPooledObject<LightAttacker>, IMonoBehaviourPooledObject<LightAttacker>, IFrameDependentPhysicsInteractor<LightAttacker.PhysicsInteraction>
@@ -61,9 +63,11 @@ public sealed partial class LightAttacker : StateMachineDrivenPlayerBase, IPoole
 	[SerializeField]
 	private StudioEventEmitter attackIdleEmitter;
 
+	[SerializeField]
+	private EventReference deathEventReference;
+
 
 	#endregion
-
 
 	#region LightAttacker Following Orbiting
 
@@ -276,6 +280,8 @@ public sealed partial class LightAttacker : StateMachineDrivenPlayerBase, IPoole
 
 	protected override void OnStateChangedToDead()
 	{
+		RuntimeManager.PlayOneShot(deathEventReference, this.transform.position);
+		LightAttackerDeathEffectSingletonPool.Instance.Get(this.transform.position);
 		ReleaseOrDestroySelf();
 	}
 

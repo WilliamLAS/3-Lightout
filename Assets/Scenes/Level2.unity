@@ -7993,7 +7993,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 868173b610c165e4598a8b58252c343e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _targetType: 5
+  targetType: 0
   acceptedTargetTypeList: 05000000
   onGotKilledByEnemy:
     m_PersistentCalls:
@@ -9806,7 +9806,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 868173b610c165e4598a8b58252c343e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _targetType: 5
+  targetType: 0
   acceptedTargetTypeList: 05000000
   onGotKilledByEnemy:
     m_PersistentCalls:
@@ -11013,7 +11013,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 868173b610c165e4598a8b58252c343e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _targetType: 5
+  targetType: 0
   acceptedTargetTypeList: 05000000
   onGotKilledByEnemy:
     m_PersistentCalls:
@@ -11811,6 +11811,10 @@ PrefabInstance:
       propertyPath: onLevelProgressChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1246896203}
+    - target: {fileID: 4897511339810989665, guid: aa0dfc8efd30bee4bbf1d73c865d9228, type: 3}
+      propertyPath: onLevelProgressChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: UpdateLevelProgress
+      objectReference: {fileID: 0}
     - target: {fileID: 7004209465415488270, guid: aa0dfc8efd30bee4bbf1d73c865d9228, type: 3}
       propertyPath: m_Camera
       value: 
@@ -11984,7 +11988,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 868173b610c165e4598a8b58252c343e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _targetType: 5
+  targetType: 0
   acceptedTargetTypeList: 05000000
   onGotKilledByEnemy:
     m_PersistentCalls:
