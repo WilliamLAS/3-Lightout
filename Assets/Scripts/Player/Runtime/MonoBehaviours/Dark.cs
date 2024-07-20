@@ -1,4 +1,5 @@
 using FMODUnity;
+using Unity.Cinemachine;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -30,6 +31,15 @@ public sealed partial class Dark : StateMachineDrivenPlayerBase, IPooledObject<D
 
 	[SerializeField]
 	private EventReference deathEventReference;
+
+
+	#endregion
+
+	[Header("Dark Visuals")]
+	#region Dark Visuals
+
+	[SerializeField]
+	private CinemachineImpulseSource cameraShaker;
 
 
 	#endregion
@@ -87,6 +97,7 @@ public sealed partial class Dark : StateMachineDrivenPlayerBase, IPooledObject<D
 
 	protected override void OnStateChangedToDead()
 	{
+		cameraShaker.GenerateImpulse(0.5f);
 		RuntimeManager.PlayOneShot(deathEventReference, this.transform.position);
 		idleEmitter.Stop();
 		ReleaseOrDestroySelf();

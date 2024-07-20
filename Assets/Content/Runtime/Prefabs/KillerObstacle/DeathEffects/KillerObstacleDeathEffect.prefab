@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 2606710160925241019}
   - component: {fileID: 4743041258725704325}
   - component: {fileID: 7356990078103458161}
-  - component: {fileID: -3735035888869462151}
+  - component: {fileID: -6401097324057321612}
   m_Layer: 0
-  m_Name: LightAttackerDeathEffect
+  m_Name: KillerObstacleDeathEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -117,7 +117,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 10
+      scalar: 5
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -665,15 +665,15 @@ ParticleSystem:
   ShapeModule:
     serializedVersion: 6
     enabled: 1
-    type: 10
+    type: 18
     angle: 25
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
     radiusThickness: 1
     donutRadius: 0.2
     m_Position: {x: 0, y: 0, z: 0}
-    m_Rotation: {x: 90, y: 0, z: 0}
-    m_Scale: {x: 1, y: 1, z: 1}
+    m_Rotation: {x: 0, y: 0, z: 0}
+    m_Scale: {x: 5, y: 1, z: 1}
     placementMode: 0
     m_MeshMaterialIndex: 0
     m_MeshNormalOffset: 0
@@ -1053,15 +1053,6 @@ ParticleSystem:
           weightedMode: 0
           inWeight: 0
           outWeight: 0
-        - serializedVersion: 3
-          time: 0.75
-          value: 0.4977779
-          inSlope: -1.4113855
-          outSlope: -1.0934962
-          tangentMode: 1
-          weightedMode: 0
-          inWeight: 0.09086067
-          outWeight: 0.3379352
         - serializedVersion: 3
           time: 1
           value: 0
@@ -2119,21 +2110,12 @@ ParticleSystem:
         - serializedVersion: 3
           time: 0
           value: 1
-          inSlope: 4.181817
-          outSlope: 4.181817
+          inSlope: -2
+          outSlope: -2
           tangentMode: 0
           weightedMode: 0
           inWeight: 0
-          outWeight: 0.4336489
-        - serializedVersion: 3
-          time: 0.25
-          value: 0.1
-          inSlope: -1.2182362
-          outSlope: -1.2182362
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.14211886
+          outWeight: 0
         - serializedVersion: 3
           time: 1
           value: 0
@@ -4928,7 +4910,7 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &-3735035888869462151
+--- !u!114 &-6401097324057321612
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4937,7 +4919,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2760199007411947650}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8c599ad48f5fdd4fb9202c4b280d6d1, type: 3}
+  m_Script: {fileID: 11500000, guid: 92bd20b6b17176e419115cfea862f873, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   releaseToPoolTimer:

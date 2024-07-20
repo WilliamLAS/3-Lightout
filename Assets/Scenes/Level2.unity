@@ -242,6 +242,53 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &29794051
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 29794052}
+  - component: {fileID: 29794053}
+  m_Layer: 0
+  m_Name: KillerObstacleBottomDeathEffectPool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &29794052
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 29794051}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &29794053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 29794051}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b2e48ff43927b14299a4b91d4aa3e88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collectionCheck: 1
+  <MaxPoolSize>k__BackingField: 10
+  prefab: {fileID: 5530925186247855605, guid: d7a9eddb8c1bda54783ef1ce0cf8da22, type: 3}
 --- !u!1 &45736497
 GameObject:
   m_ObjectHideFlags: 0
@@ -5734,6 +5781,53 @@ Transform:
   m_Children: []
   m_Father: {fileID: 748918054}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &261273197
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 261273199}
+  - component: {fileID: 261273198}
+  m_Layer: 0
+  m_Name: LightAttackerDeathEffectSingletonPool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &261273198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 261273197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1e035487eb09ff4bb2eeeb53bfd63c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collectionCheck: 1
+  <MaxPoolSize>k__BackingField: 10
+  prefab: {fileID: -3735035888869462151, guid: fd7eb68c6fae90d4ba6d1443d37c898c, type: 3}
+--- !u!4 &261273199
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 261273197}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &301594177
 GameObject:
   m_ObjectHideFlags: 0
@@ -6122,7 +6216,7 @@ GameObject:
   - component: {fileID: 378953572}
   - component: {fileID: 378953571}
   m_Layer: 0
-  m_Name: KillerObstacleSpawnSuspenderRightPool
+  m_Name: KillerObstacleRightSpawnSuspenderPool
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7019,7 +7113,7 @@ GameObject:
   - component: {fileID: 692546432}
   - component: {fileID: 692546433}
   m_Layer: 0
-  m_Name: KillerObstacleUpPool
+  m_Name: KillerObstacleBottomPool
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7994,7 +8088,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetType: 0
-  acceptedTargetTypeList: 05000000
+  acceptedTargetTypeList: 0500000006000000
   onGotKilledByEnemy:
     m_PersistentCalls:
       m_Calls: []
@@ -8401,7 +8495,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1104719841}
   m_Layer: 0
-  m_Name: --STATIC SOUNDS--
+  m_Name: --STATIC--
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8416,6 +8510,91 @@ Transform:
   m_GameObject: {fileID: 1104719840}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1137307391
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1137307393}
+  - component: {fileID: 1137307392}
+  m_Layer: 0
+  m_Name: EnteredLevelShake
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1137307392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1137307391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 180ecf9b41d478f468eb3e9083753217, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ImpulseDefinition:
+    ImpulseChannel: 1
+    ImpulseShape: 2
+    CustomImpulseShape:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    ImpulseDuration: 0.2
+    ImpulseType: 3
+    DissipationRate: 0.25
+    RawSignal: {fileID: 11400000, guid: 69ce8388f6785dd4c8c39915efece2f4, type: 2}
+    AmplitudeGain: 1
+    FrequencyGain: 1
+    RepeatMode: 0
+    Randomize: 1
+    TimeEnvelope:
+      AttackShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      DecayShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      AttackTime: 0
+      SustainTime: 0.2
+      DecayTime: 0.7
+      ScaleWithImpact: 1
+      HoldForever: 0
+    ImpactRadius: 200
+    DirectionMode: 0
+    DissipationMode: 1
+    DissipationDistance: 100
+    PropagationSpeed: 343
+  DefaultVelocity: {x: 5, y: 5, z: 5}
+--- !u!4 &1137307393
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1137307391}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -8666,6 +8845,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5caa89d923bba584bbf9a6328756ca5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cameraShaker: {fileID: 1137307392}
 --- !u!1 &1169883564
 GameObject:
   m_ObjectHideFlags: 0
@@ -8848,7 +9028,7 @@ GameObject:
   - component: {fileID: 1217849854}
   - component: {fileID: 1217849855}
   m_Layer: 0
-  m_Name: KillerObstacleSpawnSuspenderUpPool
+  m_Name: KillerObstacleUpSpawnSuspenderPool
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9439,7 +9619,7 @@ GameObject:
   - component: {fileID: 1433622982}
   - component: {fileID: 1433622981}
   m_Layer: 0
-  m_Name: KillerObstacleRightPool
+  m_Name: KillerObstacleLeftPool
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9807,7 +9987,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetType: 0
-  acceptedTargetTypeList: 05000000
+  acceptedTargetTypeList: 0500000006000000
   onGotKilledByEnemy:
     m_PersistentCalls:
       m_Calls: []
@@ -10289,7 +10469,7 @@ GameObject:
   - component: {fileID: 1635841698}
   - component: {fileID: 1635841697}
   m_Layer: 7
-  m_Name: KillerObstacleRightSpawner
+  m_Name: KillerObstacleLeftSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10678,6 +10858,53 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2744818827344090383, guid: dc926b9fbb772f34a8ec43deb035f5b0, type: 3}
   m_PrefabInstance: {fileID: 1770478924}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1786097671
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1786097673}
+  - component: {fileID: 1786097674}
+  m_Layer: 0
+  m_Name: KillerObstacleLeftDeathEffectPool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1786097673
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1786097671}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1786097674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1786097671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4dbdc47959bea2749b8f2d2a2c0db39f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collectionCheck: 1
+  <MaxPoolSize>k__BackingField: 10
+  prefab: {fileID: 5530925186247855605, guid: 1aeaaeec256e3d34e92c567a5bffb348, type: 3}
 --- !u!1001 &1826970722
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11014,7 +11241,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetType: 0
-  acceptedTargetTypeList: 05000000
+  acceptedTargetTypeList: 0500000006000000
   onGotKilledByEnemy:
     m_PersistentCalls:
       m_Calls: []
@@ -11663,7 +11890,7 @@ GameObject:
   - component: {fileID: 2135117518}
   - component: {fileID: 2135117517}
   m_Layer: 7
-  m_Name: KillerObstacleUpSpawner
+  m_Name: KillerObstacleBottomSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11989,7 +12216,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetType: 0
-  acceptedTargetTypeList: 05000000
+  acceptedTargetTypeList: 0500000006000000
   onGotKilledByEnemy:
     m_PersistentCalls:
       m_Calls: []
@@ -12024,12 +12251,15 @@ SceneRoots:
   - {fileID: 1635841699}
   - {fileID: 301594178}
   - {fileID: 1986670293}
+  - {fileID: 261273199}
   - {fileID: 529855690}
   - {fileID: 28555618}
   - {fileID: 224079255}
   - {fileID: 692546432}
+  - {fileID: 29794052}
   - {fileID: 1217849854}
   - {fileID: 1433622982}
+  - {fileID: 1786097673}
   - {fileID: 378953572}
   - {fileID: 1667988842}
   - {fileID: 11081566}
@@ -12040,5 +12270,6 @@ SceneRoots:
   - {fileID: 1104719841}
   - {fileID: 1169883565}
   - {fileID: 392492936}
+  - {fileID: 1137307393}
   - {fileID: 1490458054}
   - {fileID: 2517608929448792733}

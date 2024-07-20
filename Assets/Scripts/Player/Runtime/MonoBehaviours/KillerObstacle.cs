@@ -1,9 +1,19 @@
 using FMODUnity;
 using System.Collections.Generic;
+using Unity.Cinemachine;
 using UnityEngine;
 
 public sealed partial class KillerObstacle : MonoBehaviour, IPooledObject<KillerObstacle>
 {
+	[Header("KillerObstacle Movement")]
+	#region KillerObstacle Movement
+
+	[SerializeField]
+	private DirectionType movingDirection;
+
+
+	#endregion
+
 	[Header("KillerObstacle Enemy")]
 	#region KillerObstacle Enemy
 
@@ -28,6 +38,9 @@ public sealed partial class KillerObstacle : MonoBehaviour, IPooledObject<Killer
 	[SerializeField]
 	private Transform darkVisual;
 
+	[SerializeField]
+	private CinemachineImpulseSource cameraShaker;
+
 
 	#endregion
 
@@ -36,6 +49,9 @@ public sealed partial class KillerObstacle : MonoBehaviour, IPooledObject<Killer
 
 	[SerializeField]
 	private StudioEventEmitter idleEmitter;
+
+	[SerializeField]
+	private EventReference deathEventReference;
 
 
 	#endregion
@@ -79,7 +95,36 @@ public sealed partial class KillerObstacle : MonoBehaviour, IPooledObject<Killer
 
 	public void OnGotKilledByEnemy(Enemy killedBy)
 	{
+		cameraShaker.GenerateImpulse();
+		RuntimeManager.PlayOneShot(deathEventReference, this.transform.position);
+		PlayDeathEffect();
 		ReleaseOrDestroySelf();
+	}
+
+	private void PlayDeathEffect()
+	{
+		switch (movingDirection)
+		{
+			case DirectionType.Right:
+			KillerObstacleRightDeathEffectSingletonPool.Instance.Get(this.transform.position);
+			break;
+
+			case DirectionType.Left:
+			KillerObstacleLeftDeathEffectSingletonPool.Instance.Get(this.transform.position);
+			break;
+
+			case DirectionType.Up:
+			KillerObstacleUpDeathEffectSingletonPool.Instance.Get(this.transform.position);
+			break;
+
+			case DirectionType.Down:
+			KillerObstacleBottomDeathEffectSingletonPool.Instance.Get(this.transform.position);
+			break;
+
+			default:
+			Debug.LogError("Please specify moving direction");
+			break;
+		}
 	}
 
 	public void OnReleaseToPool(IPool<KillerObstacle> pool)

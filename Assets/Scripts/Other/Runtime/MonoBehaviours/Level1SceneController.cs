@@ -1,11 +1,27 @@
+using Unity.Cinemachine;
 using UnityEngine;
 
 public sealed partial class Level1SceneController : MonoBehaviour
 {
+	[Header("Level1SceneController Visuals")]
+	#region Level1SceneController Visuals
+
+	[SerializeField]
+	private CinemachineImpulseSource cameraShaker;
+
+
+	#endregion
+
+
 	// Initialize
 	private void OnEnable()
 	{
 		ScreenControllerSingleton.Instance.DoExplosion(2f);
+	}
+
+	private void Start()
+	{
+		cameraShaker.GenerateImpulse();
 	}
 
 

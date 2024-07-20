@@ -1,9 +1,8 @@
-using FMOD.Studio;
 using FMODUnity;
 using System;
 using System.Collections.Generic;
+using Unity.Cinemachine;
 using UnityEngine;
-using UnityEngine.Playables;
 
 [RequireComponent(typeof(Rigidbody))]
 public sealed partial class LightAttacker : StateMachineDrivenPlayerBase, IPooledObject<LightAttacker>, IMonoBehaviourPooledObject<LightAttacker>, IFrameDependentPhysicsInteractor<LightAttacker.PhysicsInteraction>
@@ -61,10 +60,16 @@ public sealed partial class LightAttacker : StateMachineDrivenPlayerBase, IPoole
 	#region LightAttacker Sounds
 
 	[SerializeField]
-	private StudioEventEmitter attackIdleEmitter;
+	private EventReference deathEventReference;
+
+
+	#endregion
+
+	[Header("LightAttacker Visuals")]
+	#region LightAttacker Visuals
 
 	[SerializeField]
-	private EventReference deathEventReference;
+	private CinemachineImpulseSource cameraShaker;
 
 
 	#endregion
@@ -272,22 +277,12 @@ public sealed partial class LightAttacker : StateMachineDrivenPlayerBase, IPoole
 		base.OnStateChangedToFollowing();
 	}
 
-	protected override void OnStateChangedToAttacking()
-	{
-		if (!attackIdleEmitter.IsPlaying())
-			attackIdleEmitter.Play();
-	}
-
 	protected override void OnStateChangedToDead()
 	{
+		cameraShaker.GenerateImpulse(0.5f);
 		RuntimeManager.PlayOneShot(deathEventReference, this.transform.position);
 		LightAttackerDeathEffectSingletonPool.Instance.Get(this.transform.position);
 		ReleaseOrDestroySelf();
-	}
-
-	protected override void OnStateChangedToAny(PlayerStateType newState)
-	{
-		attackIdleEmitter.Stop();
 	}
 
 	public void OnKilledOtherEnemy(Enemy killed)

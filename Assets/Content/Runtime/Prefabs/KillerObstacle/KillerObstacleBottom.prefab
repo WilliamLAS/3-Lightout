@@ -58,7 +58,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3532545181610884779, guid: f9d1c7d57b1cd1149b3f26430362d01f, type: 3}
       propertyPath: velocity.z
-      value: 10
+      value: -10
       objectReference: {fileID: 0}
     - target: {fileID: 3532545181610884779, guid: f9d1c7d57b1cd1149b3f26430362d01f, type: 3}
       propertyPath: maxVelocity.x
@@ -71,6 +71,10 @@ PrefabInstance:
     - target: {fileID: 3532545181610884779, guid: f9d1c7d57b1cd1149b3f26430362d01f, type: 3}
       propertyPath: maxVelocity.z
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8118866859849867674, guid: f9d1c7d57b1cd1149b3f26430362d01f, type: 3}
+      propertyPath: movingDirection
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
