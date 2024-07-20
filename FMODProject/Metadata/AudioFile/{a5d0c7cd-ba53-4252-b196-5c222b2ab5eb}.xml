@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="AudioFile" id="{a5d0c7cd-ba53-4252-b196-5c222b2ab5eb}">
 		<property name="assetPath">
-			<value>473482__erokia__msfxp-sound-494.wav</value>
+			<value>Musics/473482__erokia__msfxp-sound-494.wav</value>
 		</property>
 		<property name="isStreaming">
 			<value>true</value>

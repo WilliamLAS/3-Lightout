@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="AudioFile" id="{07edbdca-e175-4d5c-bd21-cb4e67f31373}">
 		<property name="assetPath">
-			<value>501351__dj_somar__wave-craver-01.wav</value>
+			<value>Sounds/501351__dj_somar__wave-craver-01.wav</value>
 		</property>
 		<property name="frequencyInKHz">
 			<value>44.0999985</value>

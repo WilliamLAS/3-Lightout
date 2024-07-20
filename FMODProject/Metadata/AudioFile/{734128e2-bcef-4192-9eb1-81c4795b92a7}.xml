@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="AudioFile" id="{734128e2-bcef-4192-9eb1-81c4795b92a7}">
 		<property name="assetPath">
-			<value>629156__holizna__lofi-loop-em-119-bpm.wav</value>
+			<value>Musics/629156__holizna__lofi-loop-em-119-bpm.wav</value>
 		</property>
 		<property name="isStreaming">
 			<value>true</value>

@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="AudioFile" id="{b98b5282-1793-44f5-b940-8a42f2810db6}">
 		<property name="assetPath">
-			<value>179657__deleteduser__long-autoharpchord.wav</value>
+			<value>Musics/179657__deleteduser__long-autoharpchord.wav</value>
 		</property>
 		<property name="isStreaming">
 			<value>true</value>

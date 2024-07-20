@@ -1,4 +1,5 @@
 using FMODUnity;
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -17,9 +18,6 @@ public sealed partial class Player : MonoBehaviour
 
 	public uint FinishLevelLightAttackerCount => _finishLevelLightAttackerCount;
 
-    public bool IsFinishedLevel
-    { get; private set; }
-
 
 	#endregion
 
@@ -28,6 +26,21 @@ public sealed partial class Player : MonoBehaviour
 
 	[SerializeField]
 	private Enemy enemyController;
+
+
+	#endregion
+
+	[Header("Player Visuals")]
+	#region Player Visuals
+
+	[SerializeField]
+	private Transform visual;
+
+	[SerializeField]
+	private float scaleSpeed;
+
+	[SerializeField]
+	private Vector3 finishedLevelMaxScale;
 
 
 	#endregion
@@ -54,18 +67,46 @@ public sealed partial class Player : MonoBehaviour
 
 	#endregion
 
+	#region Player Other
+
+	public bool IsFinishedLevel
+	{ get; private set; }
+
+	[NonSerialized]
+	private float levelProgress;
+
+
+	#endregion
+
 
 	// Initialize
 	private void OnEnable()
 	{
-        idleEmitter.Play();
+		_collectedLightAttackerCount = 1;
+		UpdateLevelProgress();
+		UpdateLevelProgressVisual();
+		idleEmitter.Play();
 	}
 
 
 	// Update
+	private void Update()
+	{
+		UpdateLevelProgressVisual();
+	}
+
 	public void UpdateLevelProgress()
     {
-        onLevelProgressChanged?.Invoke((float)_collectedLightAttackerCount / _finishLevelLightAttackerCount);
+		levelProgress = (float)_collectedLightAttackerCount / _finishLevelLightAttackerCount;
+		onLevelProgressChanged?.Invoke(levelProgress);
+	}
+
+	private void UpdateLevelProgressVisual()
+	{
+		var oldLocalScale = visual.localScale;
+		var updatedLocalScale = Vector3.MoveTowards(oldLocalScale, finishedLevelMaxScale * levelProgress, scaleSpeed * Time.deltaTime);
+
+		visual.localScale = updatedLocalScale;
 	}
 
 	public void OnKilledOtherEnemy(Enemy killed)
@@ -98,7 +139,7 @@ public sealed partial class Player : MonoBehaviour
 
         catch
         {
-            _collectedLightAttackerCount = 0;
+            _collectedLightAttackerCount = 1;
         }
         finally
         {

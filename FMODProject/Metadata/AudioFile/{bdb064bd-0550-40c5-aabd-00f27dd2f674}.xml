@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="AudioFile" id="{bdb064bd-0550-40c5-aabd-00f27dd2f674}">
 		<property name="assetPath">
-			<value>404819__korgesquire__0002-1-audio.wav</value>
+			<value>Musics/404819__korgesquire__0002-1-audio.wav</value>
 		</property>
 		<property name="isStreaming">
 			<value>true</value>

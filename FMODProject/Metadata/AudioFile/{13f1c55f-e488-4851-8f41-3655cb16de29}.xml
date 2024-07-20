@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="AudioFile" id="{13f1c55f-e488-4851-8f41-3655cb16de29}">
 		<property name="assetPath">
-			<value>353391__waveplaysfx__boom-reverbed-kick-09.wav</value>
+			<value>Sounds/353391__waveplaysfx__boom-reverbed-kick-09.wav</value>
 		</property>
 		<property name="frequencyInKHz">
 			<value>44.0999985</value>

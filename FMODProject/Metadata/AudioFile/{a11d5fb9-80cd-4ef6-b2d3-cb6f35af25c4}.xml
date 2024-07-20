@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="AudioFile" id="{a11d5fb9-80cd-4ef6-b2d3-cb6f35af25c4}">
 		<property name="assetPath">
-			<value>149966__nenadsimic__muffled-distant-explosion.wav</value>
+			<value>Sounds/149966__nenadsimic__muffled-distant-explosion.wav</value>
 		</property>
 		<property name="frequencyInKHz">
 			<value>44.0999985</value>

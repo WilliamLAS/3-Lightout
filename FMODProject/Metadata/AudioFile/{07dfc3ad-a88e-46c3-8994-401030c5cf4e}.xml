@@ -2,10 +2,7 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="AudioFile" id="{07dfc3ad-a88e-46c3-8994-401030c5cf4e}">
 		<property name="assetPath">
-			<value>38547__erh__22-o1-31-guitar-3.wav</value>
-		</property>
-		<property name="isStreaming">
-			<value>true</value>
+			<value>Musics/38547__erh__22-o1-31-guitar-3.wav</value>
 		</property>
 		<property name="frequencyInKHz">
 			<value>44.0999985</value>

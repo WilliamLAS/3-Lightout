@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="AudioFile" id="{c4288e98-932d-4d60-a2dc-74630d520f50}">
 		<property name="assetPath">
-			<value>386999__lollosound__lr-1-eff-surreale.wav</value>
+			<value>Sounds/386999__lollosound__lr-1-eff-surreale.wav</value>
 		</property>
 		<property name="frequencyInKHz">
 			<value>48</value>

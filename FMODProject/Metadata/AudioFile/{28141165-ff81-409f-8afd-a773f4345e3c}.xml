@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="AudioFile" id="{28141165-ff81-409f-8afd-a773f4345e3c}">
 		<property name="assetPath">
-			<value>99482__robinhood76__01866-death-wave.wav</value>
+			<value>Musics/99482__robinhood76__01866-death-wave.wav</value>
 		</property>
 		<property name="isStreaming">
 			<value>true</value>

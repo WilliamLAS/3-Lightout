@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="AudioFile" id="{cd012cab-fced-4943-8dab-3e605b87c1d4}">
 		<property name="assetPath">
-			<value>218717__bareform__thump.aiff</value>
+			<value>Sounds/218717__bareform__thump.aiff</value>
 		</property>
 		<property name="frequencyInKHz">
 			<value>48</value>

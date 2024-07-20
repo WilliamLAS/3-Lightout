@@ -64,7 +64,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 2123284993498784826}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -624,9 +624,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95ca0ff217528434a818befc66264f0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _collectedLightAttackerCount: 0
+  _collectedLightAttackerCount: 1
   _finishLevelLightAttackerCount: 10
   enemyController: {fileID: 3618831348735394168}
+  visual: {fileID: 8804771445490092859}
+  scaleSpeed: 0.25
+  finishedLevelMaxScale: {x: 1, y: 1, z: 1}
   idleEmitter: {fileID: 5923958738287575309}
   lightAttackerCountChanged: {fileID: 4743692254360650488}
   onLevelProgressChanged:

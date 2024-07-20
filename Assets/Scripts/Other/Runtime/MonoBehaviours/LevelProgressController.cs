@@ -6,21 +6,14 @@ public sealed partial class LevelProgressController : MonoBehaviour
     [SerializeField]
     private Transform floorProgressHider;
 
-    [NonSerialized]
-    private Vector3 initialFloorProgressHiderScale;
+    [SerializeField]
+    private Vector3 maxFloorProgressHiderScale;
 
 	[SerializeField]
 	private float floorProgressHiderSpeed;
 
 	[NonSerialized]
 	private float levelProgress;
-
-
-	// Initialize
-	private void Start()
-	{
-		initialFloorProgressHiderScale = floorProgressHider.localScale;
-	}
 
 
 	// Update
@@ -37,10 +30,7 @@ public sealed partial class LevelProgressController : MonoBehaviour
 
 	private void UpdateLevelProgressVisual()
 	{
-		var updatedLocalScale = floorProgressHider.localScale;
-
-		updatedLocalScale = Vector3.MoveTowards(floorProgressHider.localScale, initialFloorProgressHiderScale * (1f - levelProgress), floorProgressHiderSpeed * Time.deltaTime);
-		updatedLocalScale.z = floorProgressHider.localScale.z;
+		var updatedLocalScale = Vector3.MoveTowards(floorProgressHider.localScale, maxFloorProgressHiderScale * (1f - levelProgress), floorProgressHiderSpeed * Time.deltaTime);
 		floorProgressHider.localScale = updatedLocalScale;
 	}
 }

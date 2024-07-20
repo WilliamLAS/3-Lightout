@@ -2,10 +2,7 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="AudioFile" id="{a1269e84-86ca-4dc6-b283-ff1d0a4bbd49}">
 		<property name="assetPath">
-			<value>377403__sbaudio__reverb_kick_10.wav</value>
-		</property>
-		<property name="isStreaming">
-			<value>true</value>
+			<value>Sounds/377403__sbaudio__reverb_kick_10.wav</value>
 		</property>
 		<property name="frequencyInKHz">
 			<value>44.0999985</value>
