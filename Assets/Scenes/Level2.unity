@@ -9075,7 +9075,7 @@ GameObject:
   - component: {fileID: 1246896202}
   - component: {fileID: 1246896203}
   m_Layer: 0
-  m_Name: LevelProgressController
+  m_Name: Level2ProgressControllerSingleton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9105,11 +9105,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 1246896201}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 83d55d8b29c958346b2b6013a9eef0af, type: 3}
+  m_Script: {fileID: 11500000, guid: 6c05a42ee4b9d9b49a6b5bf7351ab665, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onFinishedLevel:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11081565}
+        m_TargetAssemblyTypeName: GameControllerPersistentSingleton, Lightout.Core.Runtime
+        m_MethodName: FinishedLevel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  <PlayerFinishProgressLightAttackerCount>k__BackingField: 10
   floorProgressHider: {fileID: 470015287}
-  maxFloorProgressHiderScale: {x: 0, y: 0, z: 0}
+  maxFloorProgressHiderScale: {x: 200, y: 200, z: 1}
   floorProgressHiderSpeed: 10
 --- !u!1 &1256633718
 GameObject:
@@ -12036,12 +12052,36 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4897511339810989665, guid: aa0dfc8efd30bee4bbf1d73c865d9228, type: 3}
+      propertyPath: onLightAttackerCountChanged.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4897511339810989665, guid: aa0dfc8efd30bee4bbf1d73c865d9228, type: 3}
       propertyPath: onLevelProgressChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1246896203}
+      objectReference: {fileID: 0}
     - target: {fileID: 4897511339810989665, guid: aa0dfc8efd30bee4bbf1d73c865d9228, type: 3}
       propertyPath: onLevelProgressChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: UpdateLevelProgress
+      objectReference: {fileID: 0}
+    - target: {fileID: 4897511339810989665, guid: aa0dfc8efd30bee4bbf1d73c865d9228, type: 3}
+      propertyPath: onLightAttackerCountChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1246896203}
+    - target: {fileID: 4897511339810989665, guid: aa0dfc8efd30bee4bbf1d73c865d9228, type: 3}
+      propertyPath: onLightAttackerCountChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4897511339810989665, guid: aa0dfc8efd30bee4bbf1d73c865d9228, type: 3}
+      propertyPath: onLightAttackerCountChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: UpdatePlayerProgress
+      objectReference: {fileID: 0}
+    - target: {fileID: 4897511339810989665, guid: aa0dfc8efd30bee4bbf1d73c865d9228, type: 3}
+      propertyPath: onLightAttackerCountChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Level1ProgressControllerSingleton, Lightout.Core.Runtime
+      objectReference: {fileID: 0}
+    - target: {fileID: 4897511339810989665, guid: aa0dfc8efd30bee4bbf1d73c865d9228, type: 3}
+      propertyPath: onLightAttackerCountChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 6570534041855163048, guid: aa0dfc8efd30bee4bbf1d73c865d9228, type: 3}
       propertyPath: m_LocalPosition.y
@@ -12269,8 +12309,8 @@ SceneRoots:
   - {fileID: 1667988842}
   - {fileID: 11081566}
   - {fileID: 934708905}
-  - {fileID: 1608005229}
   - {fileID: 1246896202}
+  - {fileID: 1608005229}
   - {fileID: 1161595646}
   - {fileID: 1104719841}
   - {fileID: 1169883565}

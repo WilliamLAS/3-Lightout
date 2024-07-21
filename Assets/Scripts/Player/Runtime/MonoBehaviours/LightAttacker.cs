@@ -5,27 +5,22 @@ using Unity.Cinemachine;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public sealed partial class LightAttacker : StateMachineDrivenPlayerBase, IPooledObject<LightAttacker>, IMonoBehaviourPooledObject<LightAttacker>, IFrameDependentPhysicsInteractor<LightAttacker.PhysicsInteraction>
+public sealed partial class LightAttacker : StateMachineDrivenPlayerBase, IPooledObject<LightAttacker>, IMonoBehaviourPooledObject<LightAttacker>
 {
-	public enum PhysicsInteraction
-	{
-		OnGrabTriggerEnter,
-	}
-
 	[Header("LightAttacker Movement")]
 	#region LightAttacker Movement
 
 	[SerializeField]
 	private Movable movementController;
 
-	[NonSerialized]
-	private Player followingPlayer;
+	[SerializeField]
+	private Carryable carryableController;
 
 
 	#endregion
 
 	[Header("LightAttacker Enemy")]
-	#region Dark Enemy
+	#region LightAttacker Enemy
 
 	[SerializeField]
 	private Enemy enemyController;
@@ -51,7 +46,7 @@ public sealed partial class LightAttacker : StateMachineDrivenPlayerBase, IPoole
 	[SerializeField]
 	private float stopFollowDistance;
 
-	private bool IsAbleToFollow => (movementController && enemyController && followingPlayer);
+	private bool IsAbleToFollow => (movementController && enemyController && carryableController.Carryier);
 
 
 	#endregion
@@ -93,26 +88,11 @@ public sealed partial class LightAttacker : StateMachineDrivenPlayerBase, IPoole
 	public IPool<LightAttacker> ParentPool
 	{ get; set; }
 
-	private Queue<FrameDependentInteraction<PhysicsInteraction>> FrameDependentInteractionQueue
-	{ get; } = new();
-
 
 	#endregion
 
 
 	// Update
-	protected override void Update()
-	{
-		DoFrameDependentPhysics();
-		base.Update();
-	}
-
-	public void RegisterFrameDependentPhysicsInteraction(FrameDependentInteraction<PhysicsInteraction> interaction)
-	{
-		if (!FrameDependentInteractionQueue.Contains(interaction))
-			FrameDependentInteractionQueue.Enqueue(interaction);
-	}
-
 	public void RandomizeOrbit()
 	{
 		// Randomize orbiting speed
@@ -154,39 +134,6 @@ public sealed partial class LightAttacker : StateMachineDrivenPlayerBase, IPoole
 		}
 	}
 
-	public void DoFrameDependentPhysics()
-	{
-		for (int i = FrameDependentInteractionQueue.Count; i > 0; i--)
-		{
-			var iteratedPhysicsInteraction = FrameDependentInteractionQueue.Dequeue();
-
-			switch (iteratedPhysicsInteraction.interactionType)
-			{
-				case PhysicsInteraction.OnGrabTriggerEnter:
-				DoGrabTriggerEnter(iteratedPhysicsInteraction);
-				break;
-			}
-		}
-	}
-
-	private void DoGrabTriggerEnter(FrameDependentInteraction<PhysicsInteraction> interaction)
-	{
-		if (!interaction.collider)
-			return;
-
-		if (EventReflectorUtils.TryGetComponentByEventReflector<Player>(interaction.collider.gameObject, out Player found))
-		{
-			if (followingPlayer != found)
-			{
-				if (followingPlayer)
-					followingPlayer.OnUnGrabbedLightAttacker(this);
-
-				followingPlayer = found;
-				followingPlayer.OnGrabbedLightAttacker(this);
-			}
-		}
-	}
-
 	protected override void DoIdleState()
 	{
         if (!IsAbleToFollow)
@@ -217,7 +164,7 @@ public sealed partial class LightAttacker : StateMachineDrivenPlayerBase, IPoole
 		currentOrbitAngle %= 360f;
 
 		var orbitAxisAngle = Quaternion.AngleAxis(currentOrbitAngle, orbitAxis) * (Vector3.one - orbitAxis);
-		var newFollowPosition = followingPlayer.transform.position - (orbitAxisAngle.normalized * followingOrbitDistance);
+		var newFollowPosition = carryableController.Carryier.transform.position - (orbitAxisAngle.normalized * followingOrbitDistance);
 
 		// Follow
 		if (this.transform.position.IsNearTo(newFollowPosition, stopFollowDistance))
@@ -295,9 +242,6 @@ public sealed partial class LightAttacker : StateMachineDrivenPlayerBase, IPoole
 		State = PlayerStateType.Dead;
 	}
 
-	public void OnGrabTriggerEnter(Collider other)
-		=> RegisterFrameDependentPhysicsInteraction(new(PhysicsInteraction.OnGrabTriggerEnter, other, null));
-
 	public void OnTakenFromPool(IPool<LightAttacker> pool)
 	{ }
 
@@ -306,31 +250,12 @@ public sealed partial class LightAttacker : StateMachineDrivenPlayerBase, IPoole
 
 
 	// Dispose
-	private void OnDisable()
-	{
-		if (GameControllerPersistentSingleton.IsQuitting || SceneControllerPersistentSingleton.IsActiveSceneChanging)
-			return;
-
-		if (followingPlayer)
-		{
-			followingPlayer.OnUnGrabbedLightAttacker(this);
-			followingPlayer = null;
-		}
-
-		FrameDependentInteractionQueue.Clear();
-	}
-
 	public void ReleaseOrDestroySelf()
 	{
 		if (ParentPool != null)
 			ParentPool.Release(this);
 		else
 			Destroy(this.gameObject);
-	}
-
-	public void CallExitInteractions()
-	{
-		throw new NotImplementedException();
 	}
 }
 

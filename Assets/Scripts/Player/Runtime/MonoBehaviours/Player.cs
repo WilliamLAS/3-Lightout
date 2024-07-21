@@ -2,21 +2,28 @@ using FMODUnity;
 using System;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public sealed partial class Player : MonoBehaviour
 {
     [Header("Player Light Attacker")]
     #region Player Light Attacker
 
-    [SerializeField]
+    [NonSerialized]
     private uint _collectedLightAttackerCount;
 
-    [SerializeField]
-    private uint _finishLevelLightAttackerCount;
-
-    public uint CollectedLightAttackerCount => _collectedLightAttackerCount;
-
-	public uint FinishLevelLightAttackerCount => _finishLevelLightAttackerCount;
+    public uint CollectedLightAttackerCount
+	{
+		get => _collectedLightAttackerCount;
+		set
+		{
+			if (value != _collectedLightAttackerCount)
+			{
+				_collectedLightAttackerCount = value;
+				onLightAttackerCountChanged?.Invoke(value);
+			}
+		}
+	}
 
 
 	#endregion
@@ -40,7 +47,7 @@ public sealed partial class Player : MonoBehaviour
 	private float scaleSpeed;
 
 	[SerializeField]
-	private Vector3 finishedLevelMaxScale;
+	private Vector3 maxScaleWhenCollectedLightAttackerCount;
 
 
 	#endregion
@@ -61,19 +68,8 @@ public sealed partial class Player : MonoBehaviour
 	#region Player Events
 
 	[SerializeField]
-	private UnityEvent<float> onLevelProgressChanged = new();
+	private UnityEvent<uint> onLightAttackerCountChanged = new();
 
-
-
-	#endregion
-
-	#region Player Other
-
-	public bool IsFinishedLevel
-	{ get; private set; }
-
-	[NonSerialized]
-	private float levelProgress;
 
 
 	#endregion
@@ -83,8 +79,8 @@ public sealed partial class Player : MonoBehaviour
 	private void OnEnable()
 	{
 		_collectedLightAttackerCount = 1;
-		UpdateLevelProgress();
-		UpdateLevelProgressVisual();
+		onLightAttackerCountChanged?.Invoke(_collectedLightAttackerCount);
+		UpdateVisualScaleIfSceneValid();
 		idleEmitter.Play();
 	}
 
@@ -92,19 +88,24 @@ public sealed partial class Player : MonoBehaviour
 	// Update
 	private void Update()
 	{
-		UpdateLevelProgressVisual();
+		UpdateVisualScaleIfSceneValid();
 	}
 
-	public void UpdateLevelProgress()
-    {
-		levelProgress = (float)_collectedLightAttackerCount / _finishLevelLightAttackerCount;
-		onLevelProgressChanged?.Invoke(levelProgress);
-	}
-
-	private void UpdateLevelProgressVisual()
+	private void UpdateVisualScaleIfSceneValid()
 	{
 		var oldLocalScale = visual.localScale;
-		var updatedLocalScale = Vector3.MoveTowards(oldLocalScale, finishedLevelMaxScale * levelProgress, scaleSpeed * Time.deltaTime);
+		var updatedLocalScale = oldLocalScale;
+
+		switch (SceneManager.GetActiveScene().name)
+		{
+			case Scenes.Level1:
+			updatedLocalScale = Vector3.MoveTowards(oldLocalScale, maxScaleWhenCollectedLightAttackerCount * Level1ProgressControllerSingleton.Instance.PlayerProgress, scaleSpeed * Time.deltaTime);
+			break;
+
+			case Scenes.Level2:
+			updatedLocalScale = Vector3.MoveTowards(oldLocalScale, maxScaleWhenCollectedLightAttackerCount * Level2ProgressControllerSingleton.Instance.PlayerProgress, scaleSpeed * Time.deltaTime);
+			break;
+		}
 
 		visual.localScale = updatedLocalScale;
 	}
@@ -117,33 +118,32 @@ public sealed partial class Player : MonoBehaviour
 		GameControllerPersistentSingleton.Instance.LostGame();
     }
 
-    public void OnGrabbedLightAttacker(LightAttacker lightAttacker)
+    public void OnGrabbedCarryable(Carryable carryable)
     {
-        lightAttackerCountChanged.Play();
-		_collectedLightAttackerCount++;
-        UpdateLevelProgress();
+		var isLightAttacker = EventReflectorUtils.TryGetComponentByEventReflector<LightAttacker>(carryable.gameObject, out _);
 
-		if (!enemyController.IsDead && !IsFinishedLevel && (_collectedLightAttackerCount >= _finishLevelLightAttackerCount))
-        {
-            IsFinishedLevel = true;
-            GameControllerPersistentSingleton.Instance.FinishedLevel();
-		}
+		if (!isLightAttacker)
+			return;
+
+		lightAttackerCountChanged.Play();
+		CollectedLightAttackerCount++;
     }
 
-    public void OnUnGrabbedLightAttacker(LightAttacker lightAttacker)
+    public void OnUngrabbedCarryable(Carryable carryable)
     {
+		var isLightAttacker = EventReflectorUtils.TryGetComponentByEventReflector<LightAttacker>(carryable.gameObject, out _);
+
+		if (!isLightAttacker)
+			return;
+
 		try
         {
-            _collectedLightAttackerCount = checked(_collectedLightAttackerCount - 1);
+			CollectedLightAttackerCount = checked(_collectedLightAttackerCount - 1);
         }
 
         catch
         {
-            _collectedLightAttackerCount = 1;
-        }
-        finally
-        {
-			UpdateLevelProgress();
+			CollectedLightAttackerCount = 1;
         }
 	}
 

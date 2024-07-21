@@ -1,86 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1952231212984170407
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3843752501962789156}
-  - component: {fileID: 3606332626304399683}
-  - component: {fileID: 1665964462396918252}
-  m_Layer: 7
-  m_Name: GrabTrigger
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3843752501962789156
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1952231212984170407}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2583985786757102144}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &3606332626304399683
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1952231212984170407}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 183
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 1
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1665964462396918252
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1952231212984170407}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e0cf441fd5d900045b8daf0655702b23, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onRaised:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 785032251419117322}
-        m_TargetAssemblyTypeName: LightAttacker, Lightout.Player.Runtime
-        m_MethodName: OnGrabTriggerEnter
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &5001511408216278447
 GameObject:
   m_ObjectHideFlags: 0
@@ -550,6 +469,7 @@ GameObject:
   - component: {fileID: 785032251419117322}
   - component: {fileID: 2158656876018481848}
   - component: {fileID: 8229675672685973680}
+  - component: {fileID: 8340952452515879376}
   m_Layer: 0
   m_Name: LightAttacker
   m_TagString: Untagged
@@ -572,7 +492,6 @@ Transform:
   m_Children:
   - {fileID: 1421788684347649297}
   - {fileID: 7942009334656778840}
-  - {fileID: 3843752501962789156}
   - {fileID: 628666995214784799}
   - {fileID: 1054680984490708539}
   - {fileID: 5615581384867666755}
@@ -620,11 +539,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _state: 0
   movementController: {fileID: 2158656876018481848}
+  carryableController: {fileID: 8340952452515879376}
   enemyController: {fileID: 8229675672685973680}
   acceptedTargetList: 03000000
   followingOrbitDistance: 1
   stopFollowDistance: 0
-  attackIdleEmitter: {fileID: 2969810230138727456}
   deathEventReference:
     Guid:
       Data1: -626200462
@@ -694,6 +613,25 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &8340952452515879376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7594563873120178541}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 609cd603e0881c04aaf1e4413f754e37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  acceptedCarryiersList: 01000000
+  onGrabben:
+    m_PersistentCalls:
+      m_Calls: []
+  onUngrabben:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &8944107336781833970
 GameObject:
   m_ObjectHideFlags: 0
