@@ -9,7 +9,7 @@ public abstract partial class LevelProgressControllerSingletonBase<SingletonType
 	#region LevelProgressControllerSingletonBase Events
 
 	[SerializeField]
-	protected UnityEvent onFinishedLevel = new();
+	protected UnityEvent onProgressFinished = new();
 
 
 	#endregion
@@ -21,7 +21,7 @@ public abstract partial class LevelProgressControllerSingletonBase<SingletonType
 
 	public float LevelProgress => _levelProgress;
 
-	public bool IsFinishedLevel
+	public bool IsProgressFinished
 	{ get; protected set; }
 
 	#endregion
@@ -33,12 +33,12 @@ public abstract partial class LevelProgressControllerSingletonBase<SingletonType
 		CheckProgressState();
 	}
 
-	private void CheckProgressState()
+	protected virtual void CheckProgressState()
 	{
-		if (!IsFinishedLevel && _levelProgress >= 0.995f)
+		if (!IsProgressFinished && _levelProgress >= 0.995f)
 		{
-			IsFinishedLevel = true;
-			onFinishedLevel?.Invoke();
+			IsProgressFinished = true;
+			onProgressFinished?.Invoke();
 		}
 	}
 

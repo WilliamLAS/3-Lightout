@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{75bee6a1-a0d8-4e1d-b824-11d29d81146a}">
+		<property name="assetPath">
+			<value>Musics/324063__timkahn__guitar-chord-02.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>192</value>
+		</property>
+		<property name="channelCount">
+			<value>1</value>
+		</property>
+		<property name="length">
+			<value>9.8439999999999994</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{61441c8d-8a3f-42b3-8752-e8bb971b1cc7}</destination>
+		</relationship>
+	</object>
+</objects>

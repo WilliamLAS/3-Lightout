@@ -52,8 +52,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lightOutTimer:
-    _tickType: 0
-    _tickSecond: 30
+    _tickType: 1
+    _tickSecond: 60
     _currentSecond: 0
   enemyController: {fileID: 3381361036363501485}
   selfVisual: {fileID: 3433624538125432446}

@@ -1,5 +1,4 @@
 using System;
-using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -54,9 +53,6 @@ public sealed partial class LightHolder : MonoBehaviour
 	[SerializeField]
 	private ParticleSystem[] onLightenPSEffects;
 
-	[SerializeField]
-	private CinemachineImpulseSource onLightenCameraShaker;
-
 
 	#endregion
 
@@ -83,6 +79,14 @@ public sealed partial class LightHolder : MonoBehaviour
 	// Update
 	private void Update()
 	{
+		if (Level3ProgressControllerSingleton.Instance.IsProgressFinished)
+		{
+			if (!IsLightening)
+				RestartLightening();
+
+			return;
+		}
+
 		// TODO: Uses timer progress
 		if (!lightOutTimer.HasEnded)
 		{
@@ -113,9 +117,14 @@ public sealed partial class LightHolder : MonoBehaviour
 			iteratedPS.Play();
 
 		enemyController.enabled = false;
-		onLightenCameraShaker.GenerateImpulse();
         lightOutTimer.Reset();
 		onLighten?.Invoke();
+	}
+
+	public void RefillLighteningIfAlreadyLighten()
+	{
+		if (IsLightening)
+			lightOutTimer.Reset();
 	}
 
 	public void UpdateLightByProgress()

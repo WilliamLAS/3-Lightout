@@ -175,7 +175,7 @@ public sealed partial class Enemy : MonoBehaviour, IFrameDependentPhysicsInterac
 
 		if (EventReflectorUtils.TryGetComponentByEventReflector<Enemy>(interaction.collider.gameObject, out Enemy found))
 		{
-			if (acceptedTargetTypeList.Contains(found.targetType) && !found.IsDead)
+			if (acceptedTargetTypeList.Contains(found.targetType) && !found.IsDead && found.isActiveAndEnabled)
 			{
 				OnKilledOtherEnemy(found);
 				found.OnGotKilledByEnemy(this);

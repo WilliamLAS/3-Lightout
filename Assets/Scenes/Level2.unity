@@ -9108,7 +9108,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c05a42ee4b9d9b49a6b5bf7351ab665, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onFinishedLevel:
+  onProgressFinished:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 11081565}

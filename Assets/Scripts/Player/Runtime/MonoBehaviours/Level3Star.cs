@@ -9,6 +9,9 @@ public sealed partial class Level3Star : MonoBehaviour
 	private float growSpeed;
 
 	[SerializeField]
+	private float shrinkSpeed;
+
+	[SerializeField]
 	private LightHolder lightHolder1;
 
 	[SerializeField]
@@ -55,7 +58,7 @@ public sealed partial class Level3Star : MonoBehaviour
 		if (IsAbleToContinueGrowing)
 			newProgress = Mathf.MoveTowards(Level3ProgressControllerSingleton.Instance.StarProgress, 1f, growSpeed * Time.deltaTime);
 		else
-			newProgress = Mathf.MoveTowards(Level3ProgressControllerSingleton.Instance.StarProgress, 0f, growSpeed * Time.deltaTime);
+			newProgress = Mathf.MoveTowards(Level3ProgressControllerSingleton.Instance.StarProgress, 0f, shrinkSpeed * Time.deltaTime);
 
 		Level3ProgressControllerSingleton.Instance.UpdateStarProgress(newProgress);
 	}

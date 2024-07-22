@@ -88,8 +88,7 @@ public sealed partial class Dark : StateMachineDrivenPlayerBase, IPooledObject<D
 
 	protected override void OnStateChangedToIdle()
 	{
-		if (!idleEmitter.IsPlaying())
-			idleEmitter.Play();
+		idleEmitter.Play();
 
 		if (movementController)
 			movementController.movingDirection = default;

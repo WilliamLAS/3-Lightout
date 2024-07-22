@@ -46,9 +46,22 @@ public partial class Level3ProgressControllerSingleton : LevelProgressController
 
 	protected override void UpdateProgress()
 	{
+		if (IsProgressFinished)
+			return;
+
 		var progress01 = (PlayerProgress + StarProgress) / 2f;
 		progress01 = Mathf.Clamp01(progress01);
 		_levelProgress = progress01;
+	}
+
+	protected override void CheckProgressState()
+	{
+		if (!IsProgressFinished && _levelProgress >= 0.995f)
+		{
+			Debug.Log("Progress finished");
+			IsProgressFinished = true;
+			onProgressFinished?.Invoke();
+		}
 	}
 
 	private void UpdateProgressVisual()
@@ -64,6 +77,9 @@ public partial class Level3ProgressControllerSingleton : LevelProgressController
 
 	public void UpdateStarProgress(float growthScale)
 	{
+		if (StarProgress >= 1f)
+			return;
+
 		StarProgress = growthScale;
 	}
 }
