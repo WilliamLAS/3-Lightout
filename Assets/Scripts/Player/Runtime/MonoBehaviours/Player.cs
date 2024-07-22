@@ -105,6 +105,10 @@ public sealed partial class Player : MonoBehaviour
 			case Scenes.Level2:
 			updatedLocalScale = Vector3.MoveTowards(oldLocalScale, maxScaleWhenCollectedLightAttackerCount * Level2ProgressControllerSingleton.Instance.PlayerProgress, scaleSpeed * Time.deltaTime);
 			break;
+
+			case Scenes.Level3:
+			updatedLocalScale = Vector3.MoveTowards(oldLocalScale, maxScaleWhenCollectedLightAttackerCount * Level3ProgressControllerSingleton.Instance.PlayerProgress, scaleSpeed * Time.deltaTime);
+			break;
 		}
 
 		visual.localScale = updatedLocalScale;

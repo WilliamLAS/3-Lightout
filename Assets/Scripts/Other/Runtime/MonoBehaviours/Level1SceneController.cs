@@ -1,37 +1,37 @@
 using Unity.Cinemachine;
 using UnityEngine;
 
-public sealed partial class Level1SceneController : MonoBehaviour
+public partial class Level1SceneController : MonoBehaviour
 {
 	[Header("Level1SceneController Visuals")]
 	#region Level1SceneController Visuals
 
 	[SerializeField]
-	private CinemachineImpulseSource cameraShaker;
+	protected CinemachineImpulseSource enteredLevelCameraShaker;
 
 
 	#endregion
 
 
 	// Initialize
-	private void OnEnable()
+	protected virtual void OnEnable()
 	{
 		ScreenControllerSingleton.Instance.DoExplosion(2f);
 	}
 
-	private void Start()
+	protected virtual void Start()
 	{
-		cameraShaker.GenerateImpulse();
+		enteredLevelCameraShaker.GenerateImpulse();
 	}
 
 
 	// Update
-	public void OnFinishedLevel()
+	public virtual void OnFinishedLevel()
 	{
 		SceneControllerPersistentSingleton.Instance.ChangeActiveSceneToNextLevel();
 	}
 
-	public void OnLostLevel()
+	public virtual void OnLostLevel()
 	{
 		SceneControllerPersistentSingleton.Instance.RestartScene();
 	}
@@ -40,7 +40,7 @@ public sealed partial class Level1SceneController : MonoBehaviour
 
 #if UNITY_EDITOR
 
-public sealed partial class Level1SceneController
+public partial class Level1SceneController
 { }
 
 #endif

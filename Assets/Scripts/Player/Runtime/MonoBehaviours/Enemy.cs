@@ -30,7 +30,7 @@ public sealed partial class Enemy : MonoBehaviour, IFrameDependentPhysicsInterac
 	{
 		get
 		{
-			_targetInRangeSet.RemoveWhere(iteratedEnemy => (!iteratedEnemy || !iteratedEnemy.gameObject.activeSelf));
+			_targetInRangeSet.RemoveWhere(iteratedEnemy => (!iteratedEnemy || iteratedEnemy.IsDead || !iteratedEnemy.enabled || !iteratedEnemy.gameObject.activeSelf));
 			return _targetInRangeSet;
 		}
 	}
@@ -40,10 +40,12 @@ public sealed partial class Enemy : MonoBehaviour, IFrameDependentPhysicsInterac
 		get
 		{
 			_targetInRangeReadonlySet ??= new (_targetInRangeSet);
-			_targetInRangeSet.RemoveWhere(iteratedEnemy => (!iteratedEnemy || !iteratedEnemy.gameObject.activeSelf));
+			_targetInRangeSet.RemoveWhere(iteratedEnemy => (!iteratedEnemy || iteratedEnemy.IsDead || !iteratedEnemy.enabled || !iteratedEnemy.gameObject.activeSelf));
 			return _targetInRangeReadonlySet;
 		}
 	}
+
+	public bool IsAbleToKill => this.isActiveAndEnabled && !this.IsDead;
 
 
 	#endregion
@@ -168,14 +170,14 @@ public sealed partial class Enemy : MonoBehaviour, IFrameDependentPhysicsInterac
 
 	private void DoEnemyKillTriggerEnter(FrameDependentInteraction<PhysicsInteraction> interaction)
 	{
-		if (!interaction.collider)
+		if (!interaction.collider || !IsAbleToKill)
 			return;
 
 		if (EventReflectorUtils.TryGetComponentByEventReflector<Enemy>(interaction.collider.gameObject, out Enemy found))
 		{
 			if (acceptedTargetTypeList.Contains(found.targetType) && !found.IsDead)
 			{
-				onKilledOtherEnemy?.Invoke(found);
+				OnKilledOtherEnemy(found);
 				found.OnGotKilledByEnemy(this);
 			}
 		}

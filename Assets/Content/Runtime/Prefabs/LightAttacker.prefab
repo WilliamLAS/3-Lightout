@@ -582,7 +582,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetType: 2
-  acceptedTargetTypeList: 03000000
+  acceptedTargetTypeList: 0300000007000000
   onGotKilledByEnemy:
     m_PersistentCalls:
       m_Calls:
@@ -625,7 +625,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 609cd603e0881c04aaf1e4413f754e37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  acceptedCarryiersList: 01000000
+  acceptedCarryiersList: 0100000002000000
   onGrabben:
     m_PersistentCalls:
       m_Calls: []

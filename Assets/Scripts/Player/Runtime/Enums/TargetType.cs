@@ -12,5 +12,7 @@ public enum TargetType
 
 	KillerObstacleLight,
 
-	KillerObstacleDark
+	KillerObstacleDark,
+
+	LightHolder
 }

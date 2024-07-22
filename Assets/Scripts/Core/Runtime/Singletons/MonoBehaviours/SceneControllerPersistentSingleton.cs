@@ -43,6 +43,12 @@ public sealed partial class SceneControllerPersistentSingleton : MonoBehaviourSi
 			case Scenes.Level1:
 				return Scenes.Level2;
 
+			case Scenes.Level2:
+				return Scenes.Level3;
+
+			case Scenes.Level3:
+				return Scenes.End;
+
 			default:
 				return Scenes.Level1;
 		}

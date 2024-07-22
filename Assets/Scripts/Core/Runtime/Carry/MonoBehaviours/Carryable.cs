@@ -43,12 +43,12 @@ public sealed partial class Carryable : MonoBehaviour
 		if (!requester || (requester == Carryier))
 			return false;
 
-		if (Carryier)
-			GetUngrabbed();
-
 		var isAbleToGetGrabbed = IsAbleToGetGrabbedBy(requester);
 		if (isAbleToGetGrabbed)
 		{
+			if (Carryier)
+				GetUngrabbed();
+
 			Carryier = requester;
 			requester.TryGrabCarryable(this);
 			onGrabben?.Invoke(Carryier);
@@ -70,6 +70,9 @@ public sealed partial class Carryable : MonoBehaviour
 
 	public bool IsAbleToGetGrabbedBy(Carryier carrier)
 	{
+		if (!enabled || !this.gameObject.activeSelf)
+			return false;
+
 		bool isCarryierValid = Carryier;
 		var isPriorityHigherThanCurrent = isCarryierValid && (carrier.priority > Carryier.priority);
 		var isCloserThanCurrent = isCarryierValid && (carrier.transform.position - this.transform.position).sqrMagnitude < (Carryier.transform.position - this.transform.position).sqrMagnitude;
