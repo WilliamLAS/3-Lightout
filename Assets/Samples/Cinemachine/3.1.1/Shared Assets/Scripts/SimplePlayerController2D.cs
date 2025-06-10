@@ -26,7 +26,7 @@ namespace Unity.Cinemachine.Samples
         bool m_IsGrounded;
         Rigidbody2D m_Rigidbody2D;
 
-        public override bool IsMoving => Mathf.Abs(m_Rigidbody2D.velocity.x) > 0.01f;
+        public override bool IsMoving => Mathf.Abs(m_Rigidbody2D.linearVelocity.x) > 0.01f;
 
         public bool IsSprinting => m_IsSprinting;
         public bool IsJumping => !m_IsGrounded;
@@ -41,7 +41,7 @@ namespace Unity.Cinemachine.Samples
         void FixedUpdate()
         {
             PreUpdate?.Invoke();
-            var vel = m_Rigidbody2D.velocity;
+            var vel = m_Rigidbody2D.linearVelocity;
 
             // Compute the new velocity and move the player, but only if not mid-jump
             if (m_IsGrounded || MotionControlWhileInAir)
@@ -61,7 +61,7 @@ namespace Unity.Cinemachine.Samples
                 if (vel.x < -Speed * 0.5f)
                     PlayerGeometry.rotation = Quaternion.Euler(new Vector3(0, -90, 0));
             }                
-            m_Rigidbody2D.velocity = vel;
+            m_Rigidbody2D.linearVelocity = vel;
 
             PostUpdate?.Invoke(
                 new Vector3(0, vel.y, Mathf.Abs(vel.x)), 

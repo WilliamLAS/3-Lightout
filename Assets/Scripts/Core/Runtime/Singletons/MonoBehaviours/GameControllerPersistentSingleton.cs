@@ -80,19 +80,17 @@ public sealed partial class GameControllerPersistentSingleton : MonoBehaviourSin
 			CreateSingleton();
 	}
 
+#if UNITY_WEBGL && !UNITY_EDITOR
+
 	private void OnVisibilityChange(string value) => VisibilityState = Enum.Parse<JSVisibilityStateType>(value, true);
 
 	private void OnBeforeUnload() => IsQuitting = true;
 
 	// TODO: In mobile, this should act like OnBeforeUnload. See: https://www.igvita.com/2015/11/20/dont-lose-user-and-app-state-use-page-visibility/
 	private void OnPageHide(int isPersisted) => IsQuitting = true;
-}
 
+#else
 
-#if UNITY_EDITOR
-
-public sealed partial class GameControllerPersistentSingleton
-{
 	private void OnApplicationPause(bool pause)
 	{
 		if (pause)
@@ -105,6 +103,14 @@ public sealed partial class GameControllerPersistentSingleton
 	{
 		IsQuitting = true;
 	}
+
+#endif
 }
+
+
+#if UNITY_EDITOR
+
+public sealed partial class GameControllerPersistentSingleton
+{ }
 
 #endif
